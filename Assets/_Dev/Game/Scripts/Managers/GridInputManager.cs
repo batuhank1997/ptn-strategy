@@ -15,6 +15,16 @@ namespace _Dev.Game.Scripts.Managers
         {
             EventSystemManager.AddListener(EventId.on_grid_left_click, OnGridSelected);
         }
+        
+        public Cell GetSelectedCell()
+        {
+            return _selectedCell;
+        }
+
+        public void SetCellUnderCursor(Cell cell)
+        {
+            _cellUnderCursor = cell;
+        }
 
         private void OnDestroy()
         {
@@ -27,11 +37,6 @@ namespace _Dev.Game.Scripts.Managers
             
             _selectedCell = GridManager.Instance.GetCell(args.Value);
             Debug.Log($"_selectedCell: {_selectedCell.name}");
-        }
-
-        public void SetCellUnderCursor(Cell cell)
-        {
-            _cellUnderCursor = cell;
         }
     }
 }

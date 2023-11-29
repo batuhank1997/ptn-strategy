@@ -7,6 +7,8 @@ namespace _Dev.Game.Scripts.Entities
     public class Cell : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer m_selectionSpriteRenderer;
+        
+        private bool _isOccupied;
 
         private const float SELECTED_ALPHA = 0.2f;
         private const float NOT_SELECTED_ALPHA = 0.1f;
