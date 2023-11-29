@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -12,10 +13,16 @@ namespace _Dev.Game.Scripts.Managers
         private GameObject _cellParent;
         
         private const float CELL_SIZE = 0.125f;
+        private readonly Dictionary<Vector2, Cell> _cells = new Dictionary<Vector2, Cell>();
         
         public void Initilize()
         {
             CreateGameBoard();
+        }
+
+        public Cell GetCell(Vector2 pos)
+        {
+            return _cells.GetValueOrDefault(pos);
         }
         
         private void CreateGameBoard()
@@ -30,7 +37,11 @@ namespace _Dev.Game.Scripts.Managers
             {
                 for (var y = 0; y < m_gridSize.y; y++)
                 {
-                    var cell = Instantiate(m_cell,  GetGridStartPos() + new Vector2(x, y) * CELL_SIZE, Quaternion.identity);
+                    var pos = new Vector2(x, y);
+                    var cell = Instantiate(m_cell,  GetGridStartPos() + pos * CELL_SIZE, Quaternion.identity);
+                    _cells.Add(pos, cell);
+                    
+                    cell.Init(pos);
                     cell.transform.SetParent(_cellParent.transform);
                 }
             }
@@ -54,9 +65,5 @@ namespace _Dev.Game.Scripts.Managers
             return pos;
         }
         
-        private void PlaceBuilding()
-        {
-            
-        }
     }
 }
