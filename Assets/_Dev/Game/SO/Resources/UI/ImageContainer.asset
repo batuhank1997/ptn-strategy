@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PowerPlantIcon: {fileID: 21300000, guid: e13dcfead7f96754f986eb9c84b5cacb, type: 3}
   BarracksIcon: {fileID: 21300000, guid: 814ebdb1c623f6d4f94a03ce9486c691, type: 3}
-  SoldierIcon: {fileID: 21300000, guid: 750355b26ee28374496813bc6dbd15a2, type: 3}
+  Soldier1Icon: {fileID: 21300000, guid: 750355b26ee28374496813bc6dbd15a2, type: 3}
+  Soldier2Icon: {fileID: 21300000, guid: 854b51813b9c45e409d689548a25d93c, type: 3}
+  Soldier3Icon: {fileID: 21300000, guid: 406f21f0570706d4ea3e3700636d4fa8, type: 3}

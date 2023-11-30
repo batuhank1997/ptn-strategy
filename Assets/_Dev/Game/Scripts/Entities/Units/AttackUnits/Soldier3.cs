@@ -2,6 +2,14 @@
 {
     public class Soldier3 : Soldier
     {
-        
+        public override ProductData GetProductData()
+        {
+            return new ProductData
+            {
+                Icon = ImageContainer.Instance.Soldier3Icon,
+                Name = "Soldier 3",
+                Producer = null,
+            };
+        }
     }
 }

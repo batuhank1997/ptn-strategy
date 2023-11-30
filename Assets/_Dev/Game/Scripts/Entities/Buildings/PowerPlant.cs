@@ -15,7 +15,8 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             return new ProductData
             {
                 Icon = ImageContainer.Instance.PowerPlantIcon,
-                Name = _buildingSo.Name
+                Name = _buildingSo.Name,
+                Producer = null
             };
         }
     }

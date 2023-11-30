@@ -1,5 +1,6 @@
 ﻿using _Dev.Utilities.Singleton;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Dev.Game.Scripts.Entities
 {
@@ -8,6 +9,8 @@ namespace _Dev.Game.Scripts.Entities
     {
         public Sprite PowerPlantIcon;
         public Sprite BarracksIcon;
-        public Sprite SoldierIcon;
+        public Sprite Soldier1Icon;
+        public Sprite Soldier2Icon;
+        public Sprite Soldier3Icon;
     }
 }

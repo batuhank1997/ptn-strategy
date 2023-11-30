@@ -1,5 +1,6 @@
 ﻿using System;
 using _Dev.Game.Scripts.Entities;
+using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Game.Scripts.Managers;
 using _Dev.Game.Scripts.UI.Views.Base;
@@ -11,8 +12,9 @@ namespace _Dev.Game.Scripts.UI.Views
 {
     public class InformationView : View
     {
+        [SerializeField] private ProductionProduct m_productionProduct;
         [SerializeField] private GameObject m_productInfoParent;
-        [SerializeField] private GameObject m_producableInfoParent;
+        [SerializeField] private GameObject m_productionParent;
         
         [SerializeField] private Image m_icon;
         [SerializeField] private TextMeshProUGUI m_nameText;
@@ -49,7 +51,7 @@ namespace _Dev.Game.Scripts.UI.Views
         private void ToggleInfoPanel(bool isOn)
         {
             m_productInfoParent.SetActive(isOn);
-            m_producableInfoParent.SetActive(isOn);
+            m_productionParent.SetActive(isOn);
         }
 
         private void DisplayInfo(Cell cell)
@@ -58,6 +60,18 @@ namespace _Dev.Game.Scripts.UI.Views
             
             m_icon.sprite = info.Icon;
             m_nameText.text = info.Name;
+
+            if (info.Producer != null)
+                CreateProductElements(info.Producer);
+        }
+        
+        private void CreateProductElements(IProducer producer)
+        {
+            foreach (var productData in producer.ProductsInProduction)
+            {
+                var element = Instantiate(m_productionProduct, m_productionParent.transform);
+                element.SetProductData( productData.Icon, productData.Name);
+            }
         }
     }
 }
