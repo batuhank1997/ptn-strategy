@@ -37,8 +37,8 @@ namespace _Dev.Game.Scripts.Entities
 
         public void OccupyCell(Building buildingToPlace)
         {
-            SetCellVisual(CellState.Occupied);
             _product = buildingToPlace;
+            SetCellVisual(CellState.Occupied);
         }
 
         public Vector2 GetCoordinates()
@@ -69,6 +69,7 @@ namespace _Dev.Game.Scripts.Entities
                 new Vector2Arguments(_cellCoordinates));
         }
 
+        //todo: refactor
         public void SetCellVisual(CellState state)
         {
             switch (state)
@@ -87,7 +88,7 @@ namespace _Dev.Game.Scripts.Entities
                     SetSprite(m_invalidPlacementSprite);
                     break;
                 case CellState.Occupied:
-                    SetSprite(m_occupiedSprite);
+                    SetSprite(_product.GetProductData().Icon);
                     SetCellSpriteAlpha(NOT_SELECTED_ALPHA);
                     break;
                 default:
@@ -105,6 +106,11 @@ namespace _Dev.Game.Scripts.Entities
         private void SetSprite(Sprite sprite)
         {
             m_spriteRenderer.sprite = sprite;
+        }
+
+        public IProduct GetProduct()
+        {
+            return _product;
         }
     }
 

@@ -7,5 +7,6 @@ namespace _Dev.Game.Scripts.Entities.Units
     {
         protected Health _health;
         protected UnitMover _unitMover;
+        public abstract ProductData GetProductData();
     }
 }

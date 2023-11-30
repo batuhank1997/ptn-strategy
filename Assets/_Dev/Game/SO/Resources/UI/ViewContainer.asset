@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78bb9f2a4b7b49349a54ae5c0af1c4a2, type: 3}
+  m_Name: ViewContainer
+  m_EditorClassIdentifier: 
+  m_views:
+  - {fileID: -4448784216254539080, guid: 567024dd140a11448b766f215b8ea3c3, type: 3}
+  - {fileID: 7947760306648811961, guid: 79389d00667d24343b7aacb162f72c22, type: 3}

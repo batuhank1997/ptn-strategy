@@ -1,3 +1,4 @@
+using _Dev.Game.Scripts.Entities.Units;
 using UnityEngine;
 
 namespace _Dev.Game.Scripts.Entities.Buildings
@@ -12,6 +13,15 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         public void Produce()
         {
             
+        }
+
+        public override ProductData GetProductData()
+        {
+            return new ProductData
+            {
+                Icon = ImageContainer.Instance.BarracksIcon,
+                Name = _buildingSo.Name
+            };
         }
     }
 }

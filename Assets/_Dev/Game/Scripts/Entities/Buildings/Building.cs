@@ -8,5 +8,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         protected BuildingSo _buildingSo;
         public Vector2 Size => _buildingSo.Size;
         public string Name => _buildingSo.Name;
+        
+        public abstract ProductData GetProductData();
     }
 }

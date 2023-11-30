@@ -1,0 +1,63 @@
+﻿using System;
+using _Dev.Game.Scripts.Entities;
+using _Dev.Game.Scripts.EventSystem;
+using _Dev.Game.Scripts.Managers;
+using _Dev.Game.Scripts.UI.Views.Base;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace _Dev.Game.Scripts.UI.Views
+{
+    public class InformationView : View
+    {
+        [SerializeField] private GameObject m_productInfoParent;
+        [SerializeField] private GameObject m_producableInfoParent;
+        
+        [SerializeField] private Image m_icon;
+        [SerializeField] private TextMeshProUGUI m_nameText;
+        
+        protected override void OnEnable()
+        {
+            EventSystemManager.AddListener(EventId.on_grid_left_click, OnCellClicked);
+            ToggleInfoPanel(false);
+            base.OnEnable();
+        }
+        
+        protected override void OnDisable()
+        {
+            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellClicked);
+            base.OnDisable();
+        }
+
+        private void OnCellClicked(EventArgs obj)
+        {
+            var args = (Vector2Arguments)obj;
+            var cell = GridManager.Instance.GetCell(args.Value);
+
+            if (cell.IsOccupied)
+            {
+                ToggleInfoPanel(true);
+                DisplayInfo(cell);
+            }
+            else
+            {
+                ToggleInfoPanel(false);
+            }
+        }
+        
+        private void ToggleInfoPanel(bool isOn)
+        {
+            m_productInfoParent.SetActive(isOn);
+            m_producableInfoParent.SetActive(isOn);
+        }
+
+        private void DisplayInfo(Cell cell)
+        {
+            var info = cell.GetProduct().GetProductData();
+            
+            m_icon.sprite = info.Icon;
+            m_nameText.text = info.Name;
+        }
+    }
+}
