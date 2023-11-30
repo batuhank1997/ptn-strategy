@@ -25,6 +25,11 @@ namespace _Dev.Game.Scripts.Managers
             return _cells.GetValueOrDefault(pos);
         }
         
+        public bool IsOutsideOfGameBoard(Vector2 coordinates)
+        {
+            return coordinates.x >= m_gridSize.x || coordinates.y >= m_gridSize.y || coordinates.x < 0 || coordinates.y < 0;
+        }
+        
         private void CreateGameBoard()
         {
             CreateCellParent();

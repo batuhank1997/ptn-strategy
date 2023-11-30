@@ -8,7 +8,8 @@ namespace _Dev.Game.Scripts.Entities
 {
     public class Cell : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer m_selectionSpriteRenderer;
+        [SerializeField] private SpriteRenderer m_spriteRenderer;
+        [SerializeField] private Sprite m_emptySprite;
         [SerializeField] private Sprite m_validPlacementSprite;
         [SerializeField] private Sprite m_invalidPlacementSprite;
         
@@ -23,8 +24,14 @@ namespace _Dev.Game.Scripts.Entities
         {
             _cellCoordinates = coordinates;
             name = $"Grid ({_cellCoordinates.x} : {_cellCoordinates.y})";
+            EventSystemManager.AddListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
-        
+
+        private void OnCursorDirectionChanged(EventArgs obj)
+        {
+            SetCellVisual(CellState.Empty);
+        }
+
         public IProduct GetProduct()
         {
             return _product;
@@ -38,27 +45,28 @@ namespace _Dev.Game.Scripts.Entities
         private void OnMouseEnter()
         {
             GridInputManager.Instance.SetCellUnderCursor(this);
-            SetCellVisual(CellState.UnderCursor);
+            GridInputManager.Instance.SetCellStatesIfPlacing();
         }
 
         private void OnMouseDown()
         {
-            EventSystemManager.InvokeEvent(EventId.on_grid_left_click, new Vector2Arguments(_cellCoordinates));
+            //todo: if is occupied, select unit or building
+            
+            EventSystemManager.InvokeEvent(
+                Input.GetMouseButtonDown(0) ? EventId.on_grid_left_click : EventId.on_grid_right_click,
+                new Vector2Arguments(_cellCoordinates));
         }
 
-        private void OnMouseExit()
-        {
-            SetCellVisual(CellState.Empty);
-        }
-
-        private void SetCellVisual(CellState state)
+        public void SetCellVisual(CellState state)
         {
             switch (state)
             {
                 case CellState.Empty:
+                    SetSprite(m_emptySprite);
                     SetCellSpriteAlpha(NOT_SELECTED_ALPHA);
                     break;
                 case CellState.UnderCursor:
+                    SetSprite(m_emptySprite);
                     SetCellSpriteAlpha(SELECTED_ALPHA);
                     break;
                 case CellState.ReadyForPlacement:
@@ -74,14 +82,19 @@ namespace _Dev.Game.Scripts.Entities
         
         private void SetCellSpriteAlpha(float a)
         {
-            var color = m_selectionSpriteRenderer.color;
+            var color = m_spriteRenderer.color;
             color = new Color(color.r, color.g, color.b, a);
-            m_selectionSpriteRenderer.color = color;
+            m_spriteRenderer.color = color;
         }
         
         private void SetSprite(Sprite sprite)
         {
-            m_selectionSpriteRenderer.sprite = sprite;
+            m_spriteRenderer.sprite = sprite;
+        }
+
+        public Vector2 GetCoordinates()
+        {
+            return _cellCoordinates;
         }
     }
 
