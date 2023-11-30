@@ -48,7 +48,7 @@ namespace _Dev.Game.Scripts.Entities
 
         private void OnCursorDirectionChanged(EventArgs obj)
         {
-            SetCellVisual(CellState.Empty);
+            SetCellVisual(IsOccupied ? CellState.Occupied : CellState.Empty);
         }
 
         private void OnMouseEnter()
@@ -59,7 +59,10 @@ namespace _Dev.Game.Scripts.Entities
 
         private void OnMouseDown()
         {
-            //todo: if is occupied, select unit or building
+            if (IsOccupied)
+            {
+                //todo:select unit or building
+            }
 
             EventSystemManager.InvokeEvent(
                 Input.GetMouseButtonDown(0) ? EventId.on_grid_left_click : EventId.on_grid_right_click,
@@ -68,9 +71,6 @@ namespace _Dev.Game.Scripts.Entities
 
         public void SetCellVisual(CellState state)
         {
-            if (IsOccupied)
-                return;
-
             switch (state)
             {
                 case CellState.Empty:
@@ -88,6 +88,7 @@ namespace _Dev.Game.Scripts.Entities
                     break;
                 case CellState.Occupied:
                     SetSprite(m_occupiedSprite);
+                    SetCellSpriteAlpha(NOT_SELECTED_ALPHA);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);

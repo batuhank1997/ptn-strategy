@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.EventSystem;
@@ -86,6 +87,18 @@ namespace _Dev.Game.Scripts.Managers
                     _cellsToPlace.Add(cell);
                     cell.SetCellVisual(CellState.ReadyForPlacement);
                 }
+            }
+
+            var isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied);
+            
+            if (isOccupied)
+            {
+                _canPlaceBuilding = false;
+                _cellsToPlace.ForEach(cell => cell.SetCellVisual(CellState.InvalidForPlacement));
+            }
+            else
+            {
+                _canPlaceBuilding = true;
             }
         }
         
