@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
-using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -14,12 +14,15 @@ namespace _Dev.Game.Scripts.Managers
         private Cell _selectedCell;
         
         private Building _buildingToPlace;
+        private readonly List<Cell> _cellsToPlace = new List<Cell>();
         
         private CursorDirection _cursorDirection;
         
+        private bool _canPlaceBuilding = true;
+        
         public void Initilize()
         {
-            EventSystemManager.AddListener(EventId.on_grid_left_click, OnGridSelected);
+            EventSystemManager.AddListener(EventId.on_grid_left_click, OnCellSelected);
         }
         
         public Cell GetSelectedCell()
@@ -54,6 +57,7 @@ namespace _Dev.Game.Scripts.Managers
                 _cursorDirection = y < newY ? CursorDirection.Up : CursorDirection.Down;
             
             EventSystemManager.InvokeEvent(EventId.on_cursor_direction_changed, new EnumArguments(_cursorDirection));
+            _cellsToPlace.Clear();
         }
 
         
@@ -78,7 +82,9 @@ namespace _Dev.Game.Scripts.Managers
                     if (GridManager.Instance.IsOutsideOfGameBoard(coordinates)) 
                         continue;
                     
-                    GridManager.Instance.GetCell(coordinates).SetCellVisual(CellState.ReadyForPlacement);
+                    var cell = GridManager.Instance.GetCell(coordinates);
+                    _cellsToPlace.Add(cell);
+                    cell.SetCellVisual(CellState.ReadyForPlacement);
                 }
             }
         }
@@ -88,16 +94,27 @@ namespace _Dev.Game.Scripts.Managers
             _buildingToPlace = building;
         }
 
-        private void OnGridSelected(EventArgs obj)
+        private void OnCellSelected(EventArgs obj)
         {
+            if (!_canPlaceBuilding) return;
+
             var args = (Vector2Arguments) obj;
             
             _selectedCell = GridManager.Instance.GetCell(args.Value);
+
+            if (_buildingToPlace != null)
+            {
+                _cellsToPlace.ForEach(cell => cell.OccupyCell(_buildingToPlace));
+                _buildingToPlace = null;
+                _cellsToPlace.Clear();
+                return;
+            }
+            
             Debug.Log($"_selectedCell: {_selectedCell.name}");
         }
         private void OnDestroy()
         {
-            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnGridSelected);
+            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
         }
     }
     

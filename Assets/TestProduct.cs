@@ -20,11 +20,9 @@ public class TestProduct : MonoBehaviour
         {
             case ProductType.Barrack:
                 GridInputManager.Instance.SetBuildingForPlacing(new Barrack());
-                Debug.Log("Barrack");
                 break;
             case ProductType.PowerPlant:
                 GridInputManager.Instance.SetBuildingForPlacing(new PowerPlant());
-                Debug.Log("PowerPlant");
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
