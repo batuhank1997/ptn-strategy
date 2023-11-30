@@ -27,10 +27,11 @@ namespace _Dev.Game.Scripts.Entities
             EventSystemManager.AddListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
 
-        private void OnCursorDirectionChanged(EventArgs obj)
+        private void OnDestroy()
         {
-            SetCellVisual(CellState.Empty);
+            EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
+
 
         public IProduct GetProduct()
         {
@@ -40,6 +41,11 @@ namespace _Dev.Game.Scripts.Entities
         public void SetProduct(IProduct product)
         {
             _product = product;
+        }
+        
+        private void OnCursorDirectionChanged(EventArgs obj)
+        {
+            SetCellVisual(CellState.Empty);
         }
         
         private void OnMouseEnter()
