@@ -1,3 +1,4 @@
+using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities.Units;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
 {
     public class PowerPlant : Building
     {
-        public PowerPlant()
+        public PowerPlant() : base()
         {
             _buildingSo = Resources.Load<BuildingSo>("Buildings/PowerPlant");
         }

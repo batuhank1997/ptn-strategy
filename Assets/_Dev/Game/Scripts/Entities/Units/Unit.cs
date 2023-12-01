@@ -5,8 +5,13 @@ namespace _Dev.Game.Scripts.Entities.Units
 {
     public abstract class Unit : IProduct
     {
-        protected Health _health;
+        protected Unit()
+        {
+            Health = new Health();
+        }
+        
         protected UnitMover _unitMover;
+        public Health Health { get; set; }
         public abstract ProductData GetProductData();
         public Type GetProductType() => GetType();
     }

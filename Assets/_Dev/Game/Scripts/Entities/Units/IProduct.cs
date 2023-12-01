@@ -1,4 +1,4 @@
-﻿using System;
+﻿using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities.Buildings;
 using UnityEngine;
 
@@ -6,7 +6,13 @@ namespace _Dev.Game.Scripts.Entities.Units
 {
     public interface IProduct
     {
+        public Health Health { get; }
         ProductData GetProductData();
+
+        void GetDamage(int damage)
+        {
+            Health.Damage(damage);
+        }
     }
 
     public class ProductData

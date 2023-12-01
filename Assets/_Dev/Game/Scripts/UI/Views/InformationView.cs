@@ -14,12 +14,13 @@ namespace _Dev.Game.Scripts.UI.Views
 {
     public class InformationView : View
     {
-        [FormerlySerializedAs("m_productionProduct")] [SerializeField] private ProductionElement m_productionElement;
+        [SerializeField] private ProductionElement m_productionElement;
         [SerializeField] private GameObject m_productInfoParent;
         [SerializeField] private GameObject m_productionParent;
         
         [SerializeField] private Image m_icon;
         [SerializeField] private TextMeshProUGUI m_nameText;
+        [SerializeField] private TextMeshProUGUI m_healthText;
         
         private List<GameObject> _productionElements = new List<GameObject>();
         
@@ -60,10 +61,12 @@ namespace _Dev.Game.Scripts.UI.Views
 
         private void DisplayInfo(Cell cell)
         {
-            var info = cell.GetProduct().GetProductData();
+            var cellProduct = cell.GetProduct();
+            var info = cellProduct.GetProductData();
             
             m_icon.sprite = info.Icon;
             m_nameText.text = info.Name;
+            m_healthText.text = $"Health: {cellProduct.Health.GetValue()}";
             
             foreach (var element in _productionElements)
                 Destroy(element);

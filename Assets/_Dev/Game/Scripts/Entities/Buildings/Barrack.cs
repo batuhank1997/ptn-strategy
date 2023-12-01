@@ -15,7 +15,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         private readonly Soldier2 _soldier2 = new();
         private readonly Soldier3 _soldier3 = new();
 
-        public Barrack()
+        public Barrack() : base()
         {
             //todo: refactor this
             _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
