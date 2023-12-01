@@ -12,8 +12,9 @@ namespace _Dev.Game.Scripts.Managers
         
         private GameObject _cellParent;
         
-        private const float CELL_SIZE = 1f;
         private readonly Dictionary<Vector2, Cell> _cells = new Dictionary<Vector2, Cell>();
+        
+        private const float CELL_SIZE = 1f;
         
         public void Initilize()
         {

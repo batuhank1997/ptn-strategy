@@ -30,6 +30,7 @@ namespace _Dev.Game.Scripts.Managers
         private void OnProductionProductClicked(EventArgs obj)
         {
             Debug.Log($"cell product: {_selectedCell.GetProduct()}");
+            //_selectedCell.GetProduct().GetProductData().Producer.Produce();
         }
 
         public Cell GetSelectedCell()
@@ -86,7 +87,7 @@ namespace _Dev.Game.Scripts.Managers
                     var offset = new Vector2(i, j);
                     var coordinates = _cellUnderCursor.GetCoordinates() + offset;
                     
-                    if (GridManager.Instance.IsOutsideOfGameBoard(coordinates)) 
+                    if (GridManager.Instance.IsOutsideOfGameBoard(coordinates))
                         continue;
                     
                     var cell = GridManager.Instance.GetCell(coordinates);
@@ -97,7 +98,7 @@ namespace _Dev.Game.Scripts.Managers
 
             var isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied);
             
-            if (isOccupied)
+            if (isOccupied || _cellsToPlace.Count < size.x * size.y)
             {
                 _canPlaceBuilding = false;
                 _cellsToPlace.ForEach(cell => cell.SetCellVisual(CellState.InvalidForPlacement));

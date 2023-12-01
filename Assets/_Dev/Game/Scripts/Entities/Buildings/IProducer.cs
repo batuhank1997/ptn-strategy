@@ -9,6 +9,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         void Produce();
         public void AddProductToProduction();
         List<ProductData> ProductsInProduction { get; set; }
-        Vector2 ProductionPosition { get; }
+        Vector2 ProductionSpawnCell { get; }
     }
 }
