@@ -6,6 +6,8 @@ namespace _Dev.Game.Scripts.UI.Views
 {
     public class ProductionProduct : MonoBehaviour
     {
+        [SerializeField] private Button m_button;
+        
         public Image Icon;
         public TextMeshProUGUI Name;
 
@@ -13,6 +15,12 @@ namespace _Dev.Game.Scripts.UI.Views
         {
             Icon.sprite = icon;
             Name.text = name;
+            m_button.onClick.AddListener(OnButtonClicked);
+        }
+
+        private void OnButtonClicked()
+        {
+            Debug.Log("Button clicked");
         }
     }
 }
