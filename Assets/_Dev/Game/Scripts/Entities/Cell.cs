@@ -59,6 +59,9 @@ namespace _Dev.Game.Scripts.Entities
 
         private void OnMouseDown()
         {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                return;
+
             if (IsOccupied)
             {
                 //todo:select unit or building
