@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.EventSystem;
@@ -18,6 +19,8 @@ namespace _Dev.Game.Scripts.UI.Views
         
         [SerializeField] private Image m_icon;
         [SerializeField] private TextMeshProUGUI m_nameText;
+        
+        private List<GameObject> _productionElements = new List<GameObject>();
         
         protected override void OnEnable()
         {
@@ -60,6 +63,11 @@ namespace _Dev.Game.Scripts.UI.Views
             
             m_icon.sprite = info.Icon;
             m_nameText.text = info.Name;
+            
+            foreach (var element in _productionElements)
+                Destroy(element);
+            
+            _productionElements.Clear();
 
             if (info.Producer != null)
                 CreateProductElements(info.Producer);
@@ -71,6 +79,7 @@ namespace _Dev.Game.Scripts.UI.Views
             {
                 var element = Instantiate(m_productionProduct, m_productionParent.transform);
                 element.SetProductData( productData.Icon, productData.Name);
+                _productionElements.Add(element.gameObject);
             }
         }
     }

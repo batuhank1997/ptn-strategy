@@ -115,16 +115,13 @@ namespace _Dev.Game.Scripts.Managers
             
             _selectedCell = GridManager.Instance.GetCell(args.Value);
 
-            if (_buildingToPlace != null)
-            {
-                _cellsToPlace.ForEach(cell => cell.OccupyCell(_buildingToPlace));
-                _buildingToPlace = null;
-                _cellsToPlace.Clear();
-                return;
-            }
+            if (_buildingToPlace == null) return;
             
-            Debug.Log($"_selectedCell: {_selectedCell.name}");
+            _cellsToPlace.ForEach(cell => cell.OccupyCell(_buildingToPlace));
+            _buildingToPlace = null;
+            _cellsToPlace.Clear();
         }
+        
         private void OnDestroy()
         {
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
