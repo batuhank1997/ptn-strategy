@@ -40,6 +40,12 @@ namespace _Dev.Game.Scripts.Entities
             _product = buildingToPlace;
             SetCellVisual(CellState.Occupied);
         }
+        
+        public void PlaceUnit(Unit unit)
+        {
+            _product = unit;
+            SetSprite(_product.GetProductData().Icon);
+        }
 
         public Vector2 GetCoordinates()
         {

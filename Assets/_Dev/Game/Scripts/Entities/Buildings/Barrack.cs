@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.Entities.Units.AttackUnits;
@@ -27,9 +28,11 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             };
         }
         
-        public void Produce()
+        public void Produce(Cell spawnCell, Type type)
         {
             //todo: soldier production
+            var soldier = (Soldier) Activator.CreateInstance(type);
+            spawnCell.PlaceUnit(soldier);
         }
         
         public override ProductData GetProductData()

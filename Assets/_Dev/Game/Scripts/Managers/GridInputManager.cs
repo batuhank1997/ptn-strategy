@@ -29,9 +29,13 @@ namespace _Dev.Game.Scripts.Managers
 
         private void OnProductionProductClicked(EventArgs obj)
         {
-            Debug.Log($"cell product: {_selectedCell.GetProduct()}");
-            Debug.Log($"cell product: {_selectedCell.GetProduct().GetProductData().Producer.SpawnPosition}");
-            //_selectedCell.GetProduct().GetProductData().Producer.Produce();
+            var pos = _selectedCell.GetProduct().GetProductData().Producer.SpawnPosition;
+            var cell = GridManager.Instance.GetCell(pos);
+            
+            //todo: production
+            var type = ((TypeArguments) obj).Type;
+            
+            _selectedCell.GetProduct().GetProductData().Producer.Produce(cell, type);
         }
 
         public Cell GetSelectedCell()
