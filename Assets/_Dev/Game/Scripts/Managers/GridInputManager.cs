@@ -24,8 +24,14 @@ namespace _Dev.Game.Scripts.Managers
         public void Initilize()
         {
             EventSystemManager.AddListener(EventId.on_grid_left_click, OnCellSelected);
+            EventSystemManager.AddListener(EventId.on_production_product_clicked, OnProductionProductClicked);
         }
-        
+
+        private void OnProductionProductClicked(EventArgs obj)
+        {
+            Debug.Log($"cell product: {_selectedCell.GetProduct()}");
+        }
+
         public Cell GetSelectedCell()
         {
             return _selectedCell;
@@ -125,6 +131,7 @@ namespace _Dev.Game.Scripts.Managers
         private void OnDestroy()
         {
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
+            EventSystemManager.RemoveListener(EventId.on_production_product_clicked, OnProductionProductClicked);
         }
     }
     

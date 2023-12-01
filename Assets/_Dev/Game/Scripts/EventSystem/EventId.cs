@@ -15,6 +15,7 @@
         on_grid_right_click = 10,
         on_grid_left_click = 11,
         on_cursor_direction_changed = 12,
+        on_production_product_clicked = 13,
         #endregion
     }
 }

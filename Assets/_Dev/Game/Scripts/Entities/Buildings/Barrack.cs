@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities.Units;
+using _Dev.Game.Scripts.Entities.Units.AttackUnits;
 using UnityEngine;
 
 namespace _Dev.Game.Scripts.Entities.Buildings
@@ -7,34 +8,27 @@ namespace _Dev.Game.Scripts.Entities.Buildings
     public class Barrack : Building, IProducer
     {
         public List<ProductData> ProductsInProduction { get; set; }
+        public Vector2 ProductionPosition { get; }
+
+        private readonly Soldier1 _soldier1 = new();
+        private readonly Soldier2 _soldier2 = new();
+        private readonly Soldier3 _soldier3 = new();
 
         public Barrack()
         {
             _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
-            
+            ProductionPosition = new Vector2(0, 0);
+            //todo: refactor this
             ProductsInProduction = new List<ProductData>
             {
-                new ProductData()
-                {
-                    Icon = ImageContainer.Instance.Soldier1Icon,
-                    Name = "Soldier 1",
-                },
-                new ProductData()
-                {
-                    Icon = ImageContainer.Instance.Soldier2Icon,
-                    Name = "Soldier 2",
-                },
-                new ProductData()
-                {
-                    Icon = ImageContainer.Instance.Soldier3Icon,
-                    Name = "Soldier 3",
-                }
+                _soldier1.GetProductData(),
+                _soldier2.GetProductData(),
+                _soldier3.GetProductData()
             };
         }
-        
+
         public void Produce()
         {
-            
         }
 
         public override ProductData GetProductData()
@@ -49,7 +43,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
 
         public void AddProductToProduction()
         {
-            
         }
 
         public List<ProductData> GetProductsInProduction()
@@ -57,5 +50,4 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             return ProductsInProduction;
         }
     }
-    
 }

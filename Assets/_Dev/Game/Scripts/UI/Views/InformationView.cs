@@ -7,13 +7,14 @@ using _Dev.Game.Scripts.Managers;
 using _Dev.Game.Scripts.UI.Views.Base;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Dev.Game.Scripts.UI.Views
 {
     public class InformationView : View
     {
-        [SerializeField] private ProductionProduct m_productionProduct;
+        [FormerlySerializedAs("m_productionProduct")] [SerializeField] private ProductionElement m_productionElement;
         [SerializeField] private GameObject m_productInfoParent;
         [SerializeField] private GameObject m_productionParent;
         
@@ -77,8 +78,8 @@ namespace _Dev.Game.Scripts.UI.Views
         {
             foreach (var productData in producer.ProductsInProduction)
             {
-                var element = Instantiate(m_productionProduct, m_productionParent.transform);
-                element.SetProductData( productData.Icon, productData.Name);
+                var element = Instantiate(m_productionElement, m_productionParent.transform);
+                element.SetElementData(productData);
                 _productionElements.Add(element.gameObject);
             }
         }

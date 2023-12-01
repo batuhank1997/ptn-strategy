@@ -9,6 +9,7 @@
                 Icon = ImageContainer.Instance.Soldier3Icon,
                 Name = "Soldier 3",
                 Producer = null,
+                Product = this
             };
         }
     }

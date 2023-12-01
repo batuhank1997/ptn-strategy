@@ -2,7 +2,7 @@
 
 namespace _Dev.Game.Scripts.Entities.Units.AttackUnits
 {
-    public class Soldier : Unit
+    public abstract class Soldier : Unit
     {
         protected DamageDealer _damageDealer;
         
@@ -13,6 +13,7 @@ namespace _Dev.Game.Scripts.Entities.Units.AttackUnits
                 Icon = ImageContainer.Instance.Soldier1Icon,
                 Name = "Soldier",
                 Producer = null,
+                Product = this
             };
         }
     }
