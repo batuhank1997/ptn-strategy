@@ -7,8 +7,8 @@ namespace _Dev.Game.Scripts.Entities.Buildings
 {
     public class Barrack : Building, IProducer
     {
-        public List<ProductData> ProductsInProduction { get; set; }
-        public Vector2 ProductionSpawnCell { get; }
+        public List<ProductData> ProducableProducts { get; set; }
+        public Vector2 SpawnPosition { get; set; }
 
         private readonly Soldier1 _soldier1 = new();
         private readonly Soldier2 _soldier2 = new();
@@ -16,10 +16,10 @@ namespace _Dev.Game.Scripts.Entities.Buildings
 
         public Barrack()
         {
-            _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
-            ProductionSpawnCell = new Vector2(0, 0);
             //todo: refactor this
-            ProductsInProduction = new List<ProductData>
+            _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
+            
+            ProducableProducts = new List<ProductData>
             {
                 _soldier1.GetProductData(),
                 _soldier2.GetProductData(),
@@ -31,7 +31,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         {
             //todo: soldier production
         }
-
+        
         public override ProductData GetProductData()
         {
             return new ProductData
@@ -48,7 +48,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
 
         public List<ProductData> GetProductsInProduction()
         {
-            return ProductsInProduction;
+            return ProducableProducts;
         }
     }
 }

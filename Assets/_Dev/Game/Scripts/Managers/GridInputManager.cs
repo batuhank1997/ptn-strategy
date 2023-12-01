@@ -30,6 +30,7 @@ namespace _Dev.Game.Scripts.Managers
         private void OnProductionProductClicked(EventArgs obj)
         {
             Debug.Log($"cell product: {_selectedCell.GetProduct()}");
+            Debug.Log($"cell product: {_selectedCell.GetProduct().GetProductData().Producer.SpawnPosition}");
             //_selectedCell.GetProduct().GetProductData().Producer.Produce();
         }
 
@@ -67,7 +68,6 @@ namespace _Dev.Game.Scripts.Managers
             EventSystemManager.InvokeEvent(EventId.on_cursor_direction_changed, new EnumArguments(_cursorDirection));
             _cellsToPlace.Clear();
         }
-
         
         //todo: refactor
         public void SetCellStatesIfPlacing()
@@ -125,6 +125,14 @@ namespace _Dev.Game.Scripts.Managers
             if (_buildingToPlace == null) return;
             
             _cellsToPlace.ForEach(cell => cell.OccupyCell(_buildingToPlace));
+            
+            if (_buildingToPlace is IProducer)
+            {
+                var producer = (IProducer) _buildingToPlace;
+                var spawnCell = GridManager.Instance.GetCell(_cellsToPlace.First().GetCoordinates() + Vector2.left);
+                producer.SpawnPosition = spawnCell.GetCoordinates();
+            }
+            
             _buildingToPlace = null;
             _cellsToPlace.Clear();
         }

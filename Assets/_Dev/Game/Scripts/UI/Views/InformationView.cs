@@ -76,7 +76,7 @@ namespace _Dev.Game.Scripts.UI.Views
         
         private void CreateProductElements(IProducer producer)
         {
-            foreach (var productData in producer.ProductsInProduction)
+            foreach (var productData in producer.ProducableProducts)
             {
                 var element = Instantiate(m_productionElement, m_productionParent.transform);
                 element.SetElementData(productData);
