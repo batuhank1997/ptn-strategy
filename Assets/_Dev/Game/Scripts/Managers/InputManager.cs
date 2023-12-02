@@ -1,4 +1,5 @@
 ﻿using _Dev.Game.Scripts.Entities;
+using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
 
@@ -32,15 +33,20 @@ namespace _Dev.Game.Scripts.Managers
                 return;
                 
             var cell = GetCellUnderCursor();
-            Debug.Log($"cell: {cell.name}");
+            EventSystemManager.InvokeEvent(EventId.on_grid_left_click, new Vector2Arguments(cell.GetCoordinates()));
+            Debug.Log($"left click on cell: {cell.name}");
         }
         
         private void HandleRightClick()
         {
-            if (Input.GetMouseButtonDown(1))
-            {
-                
-            }
+            if (!Input.GetMouseButtonDown(1)) return;
+            
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                return;
+            
+            var cell = GetCellUnderCursor();
+            EventSystemManager.InvokeEvent(EventId.on_grid_right_click, new Vector2Arguments(cell.GetCoordinates()));
+            Debug.Log($"right click on cell: {cell.name}");
         }
         
         private Cell GetCellUnderCursor()
@@ -53,7 +59,6 @@ namespace _Dev.Game.Scripts.Managers
             var y = Mathf.Abs(zeroPos.y - mousePos.y);
             
             var pos = new Vector2((int)x, (int)y);
-            Debug.Log($"x: {pos.x} y: {pos.y}");
             return GridManager.Instance.GetCell(pos);
         }
     }
