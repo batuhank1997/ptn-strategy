@@ -145,6 +145,13 @@ namespace _Dev.Game.Scripts.Entities
 
             return (null, 0);
         }
+
+        public void ResetCell()
+        {
+            _building = null;
+            _units.Clear();
+            SetCellVisual(CellState.Empty);
+        }
     }
 
     public enum CellState
