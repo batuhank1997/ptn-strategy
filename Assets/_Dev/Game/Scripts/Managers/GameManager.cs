@@ -15,9 +15,11 @@ namespace _Dev.Game.Scripts.Managers
             try
             {
                 InputManager.Instance.Initilize();
-                CameraManager.Instance.Initilize();
                 GridManager.Instance.Initilize();
-                GridInputManager.Instance.Initilize();
+                CameraManager.Instance.Initilize();
+                UnitManager.Instance.Initilize();
+                PlacingManager.Instance.Initilize();
+                // GridInputManager.Instance.Initilize();
             }
             catch (Exception e)
             {

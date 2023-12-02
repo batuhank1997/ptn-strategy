@@ -7,8 +7,9 @@ namespace _Dev.Game.Scripts.Managers
 {
     public class InputManager : Singleton<InputManager>
     {
+        private Cell _cellUnderCursor;
         private Camera _mainCamera;
-        
+     
         public void Initilize()
         {
             _mainCamera = Camera.main;
@@ -21,10 +22,32 @@ namespace _Dev.Game.Scripts.Managers
 
         private void HandleInput()
         {
+            HandleHoover();
             HandleLeftClick();
             HandleRightClick();
         }
-        
+
+        private void HandleHoover()
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            var currentCell = GetCellUnderCursor();
+
+            if (currentCell == null) return;
+            
+            if (currentCell == _cellUnderCursor)
+                return;
+            
+            EventSystemManager.InvokeEvent(EventId.on_cursor_direction_changed);
+            _cellUnderCursor = currentCell;
+            
+            if (!_cellUnderCursor.IsOccupied)
+                _cellUnderCursor.SetCellVisual(CellState.UnderCursor);
+            
+            PlacingManager.Instance.SetPlacableCellVisuals(_cellUnderCursor);
+        }
+
         private void HandleLeftClick()
         {
             if (!Input.GetMouseButtonDown(0)) return;

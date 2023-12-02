@@ -24,13 +24,13 @@ namespace _Dev.Game.Scripts.UI.Views
             {
                 ProductName = "Barrack",
                 ProductImage = ImageContainer.Instance.BarracksIcon,
-                OnClick = () => GridInputManager.Instance.SetBuildingForPlacing(new Barrack())
+                OnClick = () => PlacingManager.Instance.SetBuildingForPlacing(new Barrack())
             });
             _data.Add(new ScrollerData()
             {
                 ProductName = "Power Plant",
                 ProductImage = ImageContainer.Instance.PowerPlantIcon,
-                OnClick = () => GridInputManager.Instance.SetBuildingForPlacing(new PowerPlant())
+                OnClick = () => PlacingManager.Instance.SetBuildingForPlacing(new PowerPlant())
             });
 
             m_myScroller.Delegate = this;

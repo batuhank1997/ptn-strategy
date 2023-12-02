@@ -1,7 +1,6 @@
 using EnhancedUI.EnhancedScroller;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Dev.Game.Scripts.UI.Views

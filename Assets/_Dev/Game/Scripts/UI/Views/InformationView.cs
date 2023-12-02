@@ -62,23 +62,23 @@ namespace _Dev.Game.Scripts.UI.Views
 
         private void DisplayInfo(Cell cell)
         {
-            var cellProduct = cell.GetProductAndAmount();
-            var product = cellProduct.Item1;
-            var amount = cellProduct.Item2;
-            var info = product.GetProductData();
+            // var cellProduct = cell.GetProductAndAmount();
+            // var product = cellProduct.Item1;
+            // var amount = cellProduct.Item2;
+            // var info = product.GetProductData();
             
-            m_icon.sprite = info.Icon;
-            m_nameText.text = info.Name;
-            m_healthText.text = $"Health: {product.Health.GetValue()}";
-            m_amountText.text = product is Unit ? $"x {amount}" : "";
+            // m_icon.sprite = info.Icon;
+            // m_nameText.text = info.Name;
+            // m_healthText.text = $"Health: {product.Health.GetValue()}";
+            // m_amountText.text = product is Unit ? $"x {amount}" : "";
             
-            foreach (var element in _productionElements)
-                Destroy(element);
+            // foreach (var element in _productionElements)
+                // Destroy(element);
             
-            _productionElements.Clear();
+            // _productionElements.Clear();
 
-            if (info.Producer != null)
-                CreateProductElements(info.Producer);
+            // if (info.Producer != null)
+                // CreateProductElements(info.Producer);
         }
         
         private void CreateProductElements(IProducer producer)

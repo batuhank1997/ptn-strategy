@@ -20,8 +20,6 @@ namespace _Dev.Game.Scripts.Managers
         private Building _buildingToPlace;
         private readonly List<Cell> _cellsToPlace = new List<Cell>();
         
-        private CursorDirection _cursorDirection;
-        
         private bool _canPlaceBuilding = true;
         
         public void Initilize()
@@ -37,7 +35,7 @@ namespace _Dev.Game.Scripts.Managers
                 return;
 
             var targetCell = GridManager.Instance.GetCell(((Vector2Arguments) obj).Value);
-            var product = _selectedCell.GetProductAndAmount().Item1;
+            var product = _selectedCell.GetUnits()[0];
             
             if (product is not Unit unit) 
                 return;
@@ -67,14 +65,14 @@ namespace _Dev.Game.Scripts.Managers
 
         private void OnProductionProductClicked(EventArgs obj)
         {
-            var product = _selectedCell.GetProductAndAmount().Item1;
-            var pos = product.GetProductData().Producer.SpawnPosition;
-            var cell = GridManager.Instance.GetCell(pos);
-            
-            //todo: production
-            var type = ((TypeArguments) obj).Type;
-            
-            product.GetProductData().Producer.Produce(cell, type);
+            // var product = _selectedCell.GetProductAndAmount().Item1;
+            // var pos = product.GetProductData().Producer.SpawnPosition;
+            // var cell = GridManager.Instance.GetCell(pos);
+            //
+            // //todo: production
+            // var type = ((TypeArguments) obj).Type;
+            //
+            // product.GetProductData().Producer.Produce(cell, type);
         }
 
         public Cell GetSelectedCell()
@@ -94,23 +92,8 @@ namespace _Dev.Game.Scripts.Managers
             var oldY = _cellUnderCursor.GetCoordinates().y;
             
             _cellUnderCursor = cell;
-            
-            SetCursorDirection((int)oldX, (int)oldY);
         }
         
-        private void SetCursorDirection(int x, int y)
-        {
-            var newX = (int)_cellUnderCursor.GetCoordinates().x;
-            var newY = (int)_cellUnderCursor.GetCoordinates().y;
-            
-            if (x != newX)
-                _cursorDirection = x < newX ? CursorDirection.Right : CursorDirection.Left;
-            else if (y != newY)
-                _cursorDirection = y < newY ? CursorDirection.Up : CursorDirection.Down;
-            
-            EventSystemManager.InvokeEvent(EventId.on_cursor_direction_changed, new EnumArguments(_cursorDirection));
-            _cellsToPlace.Clear();
-        }
         
         //todo: refactor
         public void SetCellStatesIfPlacing()
@@ -186,13 +169,5 @@ namespace _Dev.Game.Scripts.Managers
             EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellRightClicked);
             EventSystemManager.RemoveListener(EventId.on_production_product_clicked, OnProductionProductClicked);
         }
-    }
-    
-    public enum CursorDirection
-    {
-        Up,
-        Down,
-        Left,
-        Right
     }
 }

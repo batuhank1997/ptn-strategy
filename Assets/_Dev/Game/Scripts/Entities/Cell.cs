@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.EventSystem;
-using _Dev.Game.Scripts.Managers;
 using TMPro;
 using UnityEngine;
 
@@ -27,6 +26,9 @@ namespace _Dev.Game.Scripts.Entities
         private const float NOT_SELECTED_ALPHA = 1f;
 
         private Vector2 _cellCoordinates;
+        
+        private CellState _prevState = CellState.Empty;
+        private CellState _currenState = CellState.Empty;
 
         public void Init(Vector2 coordinates)
         {
@@ -50,8 +52,8 @@ namespace _Dev.Game.Scripts.Entities
 
         public void PlaceBuilding(Building buildingToPlace)
         {
-            m_countText.gameObject.SetActive(false);
             _building = buildingToPlace;
+            m_countText.gameObject.SetActive(false);
             SetCellVisual(CellState.HasBuilding);
         }
         
@@ -60,6 +62,7 @@ namespace _Dev.Game.Scripts.Entities
             m_countText.gameObject.SetActive(true);
             m_countText.text = (_units.Count + 1).ToString();
             _units.Add(unit);
+            SetCellVisual(CellState.HasUnit);
             SetSprite(unit.GetProductData().Icon);
         }
 
@@ -67,42 +70,45 @@ namespace _Dev.Game.Scripts.Entities
         {
             return _cellCoordinates;
         }
+           
+        public void SetPrevState()
+        {
+            SetCellVisual(_prevState);
+        }
+        
+        public Building GetBuilding()
+        {
+            return _building;
+        }
+        
+        public List<Unit> GetUnits()
+        {
+            return _units;
+        }
+
+        public void ResetCell()
+        {
+            _building = null;
+            _units.Clear();
+            SetCellVisual(CellState.Empty);
+        }
 
         private void OnCursorDirectionChanged(EventArgs obj)
         {
             if (_building != null)
-            {
                 SetCellVisual(CellState.HasBuilding);
-                return;
-            }
-
-            SetCellVisual(_units.Count != 0 ? CellState.HasUnit : CellState.Empty);
-        }
-
-        private void OnMouseEnter()
-        {
-            GridInputManager.Instance.SetCellUnderCursor(this);
-            GridInputManager.Instance.SetCellStatesIfPlacing();
-        }
-
-        private void OnMouseDown()
-        {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-                return;
-
-            if (IsOccupied)
-            {
-                //todo:select unit or building
-            }
-
-            EventSystemManager.InvokeEvent(
-                Input.GetMouseButtonDown(0) ? EventId.on_grid_left_click : EventId.on_grid_right_click,
-                new Vector2Arguments(_cellCoordinates));
+            else if (_units != null && _units.Count != 0)
+                SetCellVisual(CellState.HasUnit);
+            else
+                SetCellVisual(CellState.Empty);
         }
 
         //todo: refactor
         public void SetCellVisual(CellState state)
         {
+            _prevState = _currenState;
+            _currenState = state;
+            
             switch (state)
             {
                 case CellState.Empty:
@@ -142,24 +148,6 @@ namespace _Dev.Game.Scripts.Entities
         private void SetSprite(Sprite sprite)
         {
             m_spriteRenderer.sprite = sprite;
-        }
-
-        public (IProduct, int) GetProductAndAmount()
-        {
-            if (_building != null)
-                return (_building, 1);
-
-            if (_units.Count != 0)
-                return (_units[0], _units.Count);
-
-            return (null, 0);
-        }
-
-        public void ResetCell()
-        {
-            _building = null;
-            _units.Clear();
-            SetCellVisual(CellState.Empty);
         }
     }
 
