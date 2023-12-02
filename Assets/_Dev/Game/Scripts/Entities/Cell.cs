@@ -11,12 +11,12 @@ namespace _Dev.Game.Scripts.Entities
     {
         [SerializeField] private SpriteRenderer m_spriteRenderer;
         [SerializeField] private Sprite m_emptySprite;
-        [SerializeField] private Sprite m_occupiedSprite;
         [SerializeField] private Sprite m_validPlacementSprite;
         [SerializeField] private Sprite m_invalidPlacementSprite;
-        public bool IsOccupied => _product != null;
+        public bool IsOccupied => _unit != null || _building != null;
 
-        private IProduct _product;
+        private Unit _unit;
+        private Building _building;
 
         private const float SELECTED_ALPHA = 0.8f;
         private const float NOT_SELECTED_ALPHA = 1f;
@@ -37,14 +37,18 @@ namespace _Dev.Game.Scripts.Entities
 
         public void OccupyCell(Building buildingToPlace)
         {
-            _product = buildingToPlace;
+            _building = buildingToPlace;
             SetCellVisual(CellState.Occupied);
         }
         
         public void PlaceUnit(Unit unit)
         {
-            _product = unit;
-            SetSprite(_product.GetProductData().Icon);
+            if (_unit != null)
+            {
+                
+            }
+            _unit = unit;
+            SetSprite(_unit.GetProductData().Icon);
         }
 
         public Vector2 GetCoordinates()
@@ -97,7 +101,8 @@ namespace _Dev.Game.Scripts.Entities
                     SetSprite(m_invalidPlacementSprite);
                     break;
                 case CellState.Occupied:
-                    SetSprite(_product.GetProductData().Icon);
+                    var product = _unit != null ? (IProduct) _unit : (IProduct) _building;
+                    SetSprite(product.GetProductData().Icon);
                     SetCellSpriteAlpha(NOT_SELECTED_ALPHA);
                     break;
                 default:
@@ -119,7 +124,7 @@ namespace _Dev.Game.Scripts.Entities
 
         public IProduct GetProduct()
         {
-            return _product;
+            return _unit != null ? (IProduct) _unit : (IProduct) _building;
         }
     }
 
