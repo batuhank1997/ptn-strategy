@@ -1,20 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Dev.Game.Scripts.Entities;
+using _Dev.Game.Scripts.Managers;
 using UnityEngine;
 
 namespace _Dev.Game.Scripts.Components
 {
-    public class PathFinder
+    public static class PathFinder
     {
-        private readonly Dictionary<Vector2, Cell> _cells;
+        private static readonly Dictionary<Vector2, Cell> _cells = GridManager.Instance.GetAllCells();
 
-        public PathFinder(Dictionary<Vector2, Cell> cells)
-        {
-            _cells = cells;
-        }
-
-        public List<Cell> FindPath(Vector2 startPosition, Vector2 targetPosition)
+        public static List<Cell> FindPath(Vector2 startPosition, Vector2 targetPosition)
         {
             var openSet = new HashSet<Vector2>();
             var closedSet = new HashSet<Vector2>();
@@ -80,7 +76,7 @@ namespace _Dev.Game.Scripts.Components
             return lowestFScoreTile;
         }
 
-        private List<Cell> ReconstructPath(Dictionary<Vector2, Vector2> cameFrom, Vector2 current)
+        private static List<Cell> ReconstructPath(Dictionary<Vector2, Vector2> cameFrom, Vector2 current)
         {
             var path = new List<Cell>();
             path.Add(_cells[current]);
@@ -95,7 +91,7 @@ namespace _Dev.Game.Scripts.Components
             return path;
         }
 
-        private List<Vector2> GetNeighbors(Vector2 position)
+        private static List<Vector2> GetNeighbors(Vector2 position)
         {
             var neighbors = new List<Vector2>
             {
