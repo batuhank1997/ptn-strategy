@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
+using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -24,7 +25,20 @@ namespace _Dev.Game.Scripts.Managers
         public void Initilize()
         {
             EventSystemManager.AddListener(EventId.on_grid_left_click, OnCellSelected);
+            EventSystemManager.AddListener(EventId.on_grid_right_click, OnCellRightClicked);
             EventSystemManager.AddListener(EventId.on_production_product_clicked, OnProductionProductClicked);
+        }
+
+        private void OnCellRightClicked(EventArgs obj)
+        {
+            if (_selectedCell == null) 
+                return;
+
+            if (_selectedCell.GetProduct() is not Unit) 
+                return;
+            
+            var unit = (Unit) _selectedCell.GetProduct();
+            unit.UnitMover.MoveUp();
         }
 
         private void OnProductionProductClicked(EventArgs obj)
@@ -144,6 +158,7 @@ namespace _Dev.Game.Scripts.Managers
         private void OnDestroy()
         {
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
+            EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellRightClicked);
             EventSystemManager.RemoveListener(EventId.on_production_product_clicked, OnProductionProductClicked);
         }
     }

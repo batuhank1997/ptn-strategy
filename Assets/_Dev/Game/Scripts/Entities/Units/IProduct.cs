@@ -8,11 +8,6 @@ namespace _Dev.Game.Scripts.Entities.Units
     {
         public Health Health { get; }
         ProductData GetProductData();
-
-        void GetDamage(int damage)
-        {
-            Health.Damage(damage);
-        }
     }
 
     public class ProductData

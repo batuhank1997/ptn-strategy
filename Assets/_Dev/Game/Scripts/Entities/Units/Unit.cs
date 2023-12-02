@@ -1,5 +1,6 @@
 using System;
 using _Dev.Game.Scripts.Components;
+using UnityEngine;
 
 namespace _Dev.Game.Scripts.Entities.Units
 {
@@ -10,8 +11,8 @@ namespace _Dev.Game.Scripts.Entities.Units
             Health = new Health();
         }
         
-        protected UnitMover _unitMover;
         public Health Health { get; set; }
+        public UnitMover UnitMover { get; set; }
         public abstract ProductData GetProductData();
         public Type GetProductType() => GetType();
     }
