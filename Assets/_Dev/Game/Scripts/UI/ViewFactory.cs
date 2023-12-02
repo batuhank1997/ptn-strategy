@@ -2,6 +2,7 @@
 using _Dev.Game.Scripts.UI.Views;
 using _Dev.Game.Scripts.UI.Views.Base;
 using _Dev.Utilities.Singleton;
+using UnityEngine;
 
 namespace _Dev.Game.Scripts.UI
 {

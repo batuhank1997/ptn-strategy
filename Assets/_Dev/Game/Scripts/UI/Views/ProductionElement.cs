@@ -25,7 +25,8 @@ namespace _Dev.Game.Scripts.UI.Views
 
         private void OnButtonClicked()
         {
-            EventSystemManager.InvokeEvent(EventId.on_production_product_clicked, new TypeArguments(_product.Product.GetType()));
+            EventSystemManager.InvokeEvent(EventId.on_production_product_clicked, 
+                new TypeArguments(_product.Product.GetType()));
         }
     }
 }

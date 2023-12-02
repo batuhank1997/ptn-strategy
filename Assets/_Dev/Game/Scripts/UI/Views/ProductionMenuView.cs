@@ -1,40 +1,45 @@
 using System.Collections.Generic;
-using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.Managers;
 using _Dev.Game.Scripts.UI.Views.Base;
 using EnhancedUI.EnhancedScroller;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Dev.Game.Scripts.UI.Views
 {
     public class ProductionMenuView : View, IEnhancedScrollerDelegate
     {
         [SerializeField] private EnhancedScroller m_myScroller;
-        [FormerlySerializedAs("m_productPrefab")] [SerializeField] private ProductView m_productViewPrefab;
+        [SerializeField] private ProductView m_productViewPrefab;
 
         private List<ScrollerData> _data;
-        
-        void Start () 
+        private BuildingFactory  _buildingFactory = new BuildingFactory();
+
+        private void Start() 
         {
             _data = new List<ScrollerData>();
+            
+            var barrack = _buildingFactory.Create<Barrack>();
+            var powerPlant = _buildingFactory.Create<PowerPlant>();
 
             _data.Add(new ScrollerData()
             {
-                ProductName = "Barrack",
-                ProductImage = ImageContainer.Instance.BarracksIcon,
-                OnClick = () => PlacingManager.Instance.SetBuildingForPlacing(new Barrack())
+                ProductName = barrack.GetProductData().Name,
+                ProductImage = barrack.GetProductData().Icon,
+                OnClick = () => PlacingManager.Instance.SetBuildingForPlacing(barrack)
             });
+            
             _data.Add(new ScrollerData()
             {
-                ProductName = "Power Plant",
-                ProductImage = ImageContainer.Instance.PowerPlantIcon,
-                OnClick = () => PlacingManager.Instance.SetBuildingForPlacing(new PowerPlant())
+                ProductName = powerPlant.GetProductData().Name,
+                ProductImage = powerPlant.GetProductData().Icon,
+                OnClick = () => PlacingManager.Instance.SetBuildingForPlacing(powerPlant)
             });
 
             m_myScroller.Delegate = this;
             m_myScroller.ReloadData();
+            
+            base.OnEnable();
         }
 
         public int GetNumberOfCells(EnhancedScroller scroller)

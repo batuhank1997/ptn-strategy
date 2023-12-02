@@ -8,7 +8,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
     public interface IProducer
     {
         void Produce(Cell cell, Type type);
-        public void AddProductToProduction();
         List<ProductData> ProducableProducts { get; set; }
         Vector2 SpawnPosition { get; set; }
     }

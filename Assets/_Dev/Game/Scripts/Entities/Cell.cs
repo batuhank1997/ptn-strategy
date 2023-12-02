@@ -17,6 +17,7 @@ namespace _Dev.Game.Scripts.Entities
         [SerializeField] private Sprite m_emptySprite;
         [SerializeField] private Sprite m_validPlacementSprite;
         [SerializeField] private Sprite m_invalidPlacementSprite;
+        
         public bool IsOccupied => _units.Count != 0 || _building != null;
 
         private List<Unit> _units = new List<Unit>();
@@ -27,14 +28,11 @@ namespace _Dev.Game.Scripts.Entities
 
         private Vector2 _cellCoordinates;
         
-        private CellState _prevState = CellState.Empty;
-        private CellState _currenState = CellState.Empty;
-
         public void Init(Vector2 coordinates)
         {
             _cellCoordinates = coordinates;
-            
             name = $"Grid ({_cellCoordinates.x} : {_cellCoordinates.y})";
+            
             if (m_isDebug)
             {
                 m_debugText.gameObject.SetActive(true);
@@ -63,17 +61,11 @@ namespace _Dev.Game.Scripts.Entities
             m_countText.text = (_units.Count + 1).ToString();
             _units.Add(unit);
             SetCellVisual(CellState.HasUnit);
-            SetSprite(unit.GetProductData().Icon);
         }
 
         public Vector2 GetCoordinates()
         {
             return _cellCoordinates;
-        }
-           
-        public void SetPrevState()
-        {
-            SetCellVisual(_prevState);
         }
         
         public Building GetBuilding()
@@ -106,9 +98,6 @@ namespace _Dev.Game.Scripts.Entities
         //todo: refactor
         public void SetCellVisual(CellState state)
         {
-            _prevState = _currenState;
-            _currenState = state;
-            
             switch (state)
             {
                 case CellState.Empty:

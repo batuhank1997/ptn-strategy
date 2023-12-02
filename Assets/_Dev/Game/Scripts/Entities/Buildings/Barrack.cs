@@ -2,37 +2,59 @@ using System;
 using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.Entities.Units.AttackUnits;
+using _Dev.Game.Scripts.EventSystem;
+using _Dev.Game.Scripts.Managers;
 using UnityEngine;
 
 namespace _Dev.Game.Scripts.Entities.Buildings
 {
     public class Barrack : Building, IProducer
     {
+        private UnitFactory _unitFactory = new UnitFactory();
         public List<ProductData> ProducableProducts { get; set; }
         public Vector2 SpawnPosition { get; set; }
-
-        private readonly Soldier1 _soldier1 = new();
-        private readonly Soldier2 _soldier2 = new();
-        private readonly Soldier3 _soldier3 = new();
-
+        
         public Barrack() : base()
         {
             //todo: refactor this
             _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
             
+            EventSystemManager.AddListener(EventId.on_production_product_clicked, OnProducableProductClick);
+            
             ProducableProducts = new List<ProductData>
             {
-                _soldier1.GetProductData(),
-                _soldier2.GetProductData(),
-                _soldier3.GetProductData()
+                _unitFactory.Create<Soldier1>().GetProductData(),
+                _unitFactory.Create<Soldier2>().GetProductData(),
+                _unitFactory.Create<Soldier3>().GetProductData()
             };
         }
-        
+
+        private void OnProducableProductClick(EventArgs obj)
+        {
+            var args = (TypeArguments) obj;
+            var spawnCell = GridManager.Instance.GetCell(SpawnPosition);
+            Produce(spawnCell, args.Type);
+        }
+
         public void Produce(Cell spawnCell, Type type)
         {
-            //todo: soldier production
-            var soldier = (Soldier) Activator.CreateInstance(type);
-            spawnCell.PlaceUnit(soldier);
+            var unitFactory = new UnitFactory();
+            
+            if (type == typeof(Soldier1))
+            {
+                var soldier = unitFactory.Create<Soldier1>();
+                spawnCell.PlaceUnit(soldier);
+            }
+            else if (type == typeof(Soldier2))
+            {
+                var soldier = unitFactory.Create<Soldier2>();
+                spawnCell.PlaceUnit(soldier);
+            }
+            else if (type == typeof(Soldier3))
+            {
+                var soldier = unitFactory.Create<Soldier3>();
+                spawnCell.PlaceUnit(soldier);
+            }
         }
         
         public override ProductData GetProductData()
@@ -44,15 +66,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
                 Producer = this,
                 Product = this
             };
-        }
-
-        public void AddProductToProduction()
-        {
-        }
-
-        public List<ProductData> GetProductsInProduction()
-        {
-            return ProducableProducts;
         }
     }
 }
