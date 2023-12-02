@@ -43,6 +43,10 @@ namespace _Dev.Game.Scripts.Managers
             if (_buildingToPlace == null || !_canPlaceBuilding) return;
 
             _cellsToPlace.ForEach(c => c.PlaceBuilding(_buildingToPlace));
+            
+            if (_buildingToPlace is IProducer producer)
+                producer.SpawnPosition = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0);
+            
             _buildingToPlace = null;
             _cellsToPlace.Clear();
         }
