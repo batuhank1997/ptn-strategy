@@ -11,8 +11,10 @@ namespace _Dev.Game.Scripts.Entities
 {
     public class Cell : MonoBehaviour
     {
+        [SerializeField] private bool m_isDebug;
         [SerializeField] private SpriteRenderer m_spriteRenderer;
         [SerializeField] private TextMeshPro m_countText;
+        [SerializeField] private TextMeshPro m_debugText;
         [SerializeField] private Sprite m_emptySprite;
         [SerializeField] private Sprite m_validPlacementSprite;
         [SerializeField] private Sprite m_invalidPlacementSprite;
@@ -29,7 +31,14 @@ namespace _Dev.Game.Scripts.Entities
         public void Init(Vector2 coordinates)
         {
             _cellCoordinates = coordinates;
+            
             name = $"Grid ({_cellCoordinates.x} : {_cellCoordinates.y})";
+            if (m_isDebug)
+            {
+                m_debugText.gameObject.SetActive(true);
+                m_debugText.text = $"{_cellCoordinates.x}:{_cellCoordinates.y}";
+            }
+            
             SetCellVisual(CellState.Empty);
             EventSystemManager.AddListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }

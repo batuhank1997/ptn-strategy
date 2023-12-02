@@ -6,7 +6,6 @@ using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.Entities.Units;
-using _Dev.Game.Scripts.Entities.Units.AttackUnits;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;

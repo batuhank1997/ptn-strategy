@@ -26,6 +26,16 @@ namespace _Dev.Game.Scripts.Managers
             return _cells.GetValueOrDefault(pos);
         }
         
+        public Dictionary<Vector2, Cell> GetAllCells()
+        {
+            return _cells;
+        }
+        
+        public Vector2 GetGridSize()
+        {
+            return m_gridSize;
+        }
+        
         public bool IsOutsideOfGameBoard(Vector2 coordinates)
         {
             return coordinates.x >= m_gridSize.x || coordinates.y >= m_gridSize.y || coordinates.x < 0 || coordinates.y < 0;
@@ -72,9 +82,5 @@ namespace _Dev.Game.Scripts.Managers
             return pos;
         }
 
-        public Dictionary<Vector2, Cell> GetAllCells()
-        {
-            return _cells;
-        }
     }
 }

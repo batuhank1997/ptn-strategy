@@ -14,6 +14,7 @@ namespace _Dev.Game.Scripts.Managers
         {
             try
             {
+                InputManager.Instance.Initilize();
                 CameraManager.Instance.Initilize();
                 GridManager.Instance.Initilize();
                 GridInputManager.Instance.Initilize();
