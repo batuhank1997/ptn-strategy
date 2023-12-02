@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
+using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Game.Scripts.Managers;
 using _Dev.Game.Scripts.UI.Views.Base;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Dev.Game.Scripts.UI.Views
@@ -21,6 +21,7 @@ namespace _Dev.Game.Scripts.UI.Views
         [SerializeField] private Image m_icon;
         [SerializeField] private TextMeshProUGUI m_nameText;
         [SerializeField] private TextMeshProUGUI m_healthText;
+        [SerializeField] private TextMeshProUGUI m_amountText;
         
         private List<GameObject> _productionElements = new List<GameObject>();
         
@@ -61,12 +62,15 @@ namespace _Dev.Game.Scripts.UI.Views
 
         private void DisplayInfo(Cell cell)
         {
-            var cellProduct = cell.GetProduct();
-            var info = cellProduct.GetProductData();
+            var cellProduct = cell.GetProductAndAmount();
+            var product = cellProduct.Item1;
+            var amount = cellProduct.Item2;
+            var info = product.GetProductData();
             
             m_icon.sprite = info.Icon;
             m_nameText.text = info.Name;
-            m_healthText.text = $"Health: {cellProduct.Health.GetValue()}";
+            m_healthText.text = $"Health: {product.Health.GetValue()}";
+            m_amountText.text = product is Unit ? $"x {amount}" : "";
             
             foreach (var element in _productionElements)
                 Destroy(element);

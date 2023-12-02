@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Game.Scripts.Managers;
+using TMPro;
 using UnityEngine;
 
 namespace _Dev.Game.Scripts.Entities
@@ -10,12 +12,13 @@ namespace _Dev.Game.Scripts.Entities
     public class Cell : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer m_spriteRenderer;
+        [SerializeField] private TextMeshPro m_countText;
         [SerializeField] private Sprite m_emptySprite;
         [SerializeField] private Sprite m_validPlacementSprite;
         [SerializeField] private Sprite m_invalidPlacementSprite;
-        public bool IsOccupied => _unit != null || _building != null;
+        public bool IsOccupied => _units.Count != 0 || _building != null;
 
-        private Unit _unit;
+        private List<Unit> _units = new List<Unit>();
         private Building _building;
 
         private const float SELECTED_ALPHA = 0.8f;
@@ -27,6 +30,7 @@ namespace _Dev.Game.Scripts.Entities
         {
             _cellCoordinates = coordinates;
             name = $"Grid ({_cellCoordinates.x} : {_cellCoordinates.y})";
+            SetCellVisual(CellState.Empty);
             EventSystemManager.AddListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
 
@@ -35,20 +39,18 @@ namespace _Dev.Game.Scripts.Entities
             EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
 
-        public void OccupyCell(Building buildingToPlace)
+        public void PlaceBuilding(Building buildingToPlace)
         {
+            m_countText.text = "";
             _building = buildingToPlace;
-            SetCellVisual(CellState.Occupied);
+            SetCellVisual(CellState.HasBuilding);
         }
         
         public void PlaceUnit(Unit unit)
         {
-            if (_unit != null)
-            {
-                
-            }
-            _unit = unit;
-            SetSprite(_unit.GetProductData().Icon);
+            m_countText.text = (_units.Count + 1).ToString();
+            _units.Add(unit);
+            SetSprite(unit.GetProductData().Icon);
         }
 
         public Vector2 GetCoordinates()
@@ -58,7 +60,13 @@ namespace _Dev.Game.Scripts.Entities
 
         private void OnCursorDirectionChanged(EventArgs obj)
         {
-            SetCellVisual(IsOccupied ? CellState.Occupied : CellState.Empty);
+            if (_building != null)
+            {
+                SetCellVisual(CellState.HasBuilding);
+                return;
+            }
+
+            SetCellVisual(_units.Count != 0 ? CellState.HasUnit : CellState.Empty);
         }
 
         private void OnMouseEnter()
@@ -88,6 +96,7 @@ namespace _Dev.Game.Scripts.Entities
             switch (state)
             {
                 case CellState.Empty:
+                    m_countText.text = "";
                     SetSprite(m_emptySprite);
                     SetCellSpriteAlpha(NOT_SELECTED_ALPHA);
                     break;
@@ -100,9 +109,12 @@ namespace _Dev.Game.Scripts.Entities
                 case CellState.InvalidForPlacement:
                     SetSprite(m_invalidPlacementSprite);
                     break;
-                case CellState.Occupied:
-                    var product = _unit != null ? (IProduct) _unit : (IProduct) _building;
-                    SetSprite(product.GetProductData().Icon);
+                case CellState.HasBuilding:
+                    SetSprite(_building.GetProductData().Icon);
+                    SetCellSpriteAlpha(NOT_SELECTED_ALPHA);
+                    break;
+                case CellState.HasUnit:
+                    SetSprite(_units[0].GetProductData().Icon);
                     SetCellSpriteAlpha(NOT_SELECTED_ALPHA);
                     break;
                 default:
@@ -122,9 +134,15 @@ namespace _Dev.Game.Scripts.Entities
             m_spriteRenderer.sprite = sprite;
         }
 
-        public IProduct GetProduct()
+        public (IProduct, int) GetProductAndAmount()
         {
-            return _unit != null ? (IProduct) _unit : (IProduct) _building;
+            if (_building != null)
+                return (_building, 1);
+
+            if (_units.Count != 0)
+                return (_units[0], _units.Count);
+
+            return (null, 0);
         }
     }
 
@@ -134,6 +152,7 @@ namespace _Dev.Game.Scripts.Entities
         UnderCursor,
         ReadyForPlacement,
         InvalidForPlacement,
-        Occupied
+        HasBuilding,
+        HasUnit,
     }
 }

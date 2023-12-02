@@ -34,22 +34,25 @@ namespace _Dev.Game.Scripts.Managers
             if (_selectedCell == null) 
                 return;
 
-            if (_selectedCell.GetProduct() is not Unit) 
-                return;
+            var product = _selectedCell.GetProductAndAmount().Item1;
             
-            var unit = (Unit) _selectedCell.GetProduct();
-            unit.UnitMover.MoveUp();
+            if (product is not Unit unit) 
+                return;
+
+            //todo: implement move logic
+            //unit.UnitMover.MoveUp();
         }
 
         private void OnProductionProductClicked(EventArgs obj)
         {
-            var pos = _selectedCell.GetProduct().GetProductData().Producer.SpawnPosition;
+            var product = _selectedCell.GetProductAndAmount().Item1;
+            var pos = product.GetProductData().Producer.SpawnPosition;
             var cell = GridManager.Instance.GetCell(pos);
             
             //todo: production
             var type = ((TypeArguments) obj).Type;
             
-            _selectedCell.GetProduct().GetProductData().Producer.Produce(cell, type);
+            product.GetProductData().Producer.Produce(cell, type);
         }
 
         public Cell GetSelectedCell()
@@ -142,7 +145,7 @@ namespace _Dev.Game.Scripts.Managers
 
             if (_buildingToPlace == null) return;
             
-            _cellsToPlace.ForEach(cell => cell.OccupyCell(_buildingToPlace));
+            _cellsToPlace.ForEach(cell => cell.PlaceBuilding(_buildingToPlace));
             
             if (_buildingToPlace is IProducer)
             {
