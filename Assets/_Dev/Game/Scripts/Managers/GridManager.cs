@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -10,9 +11,8 @@ namespace _Dev.Game.Scripts.Managers
         [SerializeField] private Cell m_cell;
         [SerializeField] private Vector2 m_gridSize;
         
-        private GameObject _cellParent;
-        
         private readonly Dictionary<Vector2, Cell> _cells = new Dictionary<Vector2, Cell>();
+        private GameObject _cellParent;
         
         private const float CELL_SIZE = 1f;
         
@@ -66,10 +66,15 @@ namespace _Dev.Game.Scripts.Managers
 
         private Vector2 GetGridStartPos()
         {
-            var pos = new Vector2(_cellParent.transform.position.x - ((CELL_SIZE * m_gridSize.x) / 2), _cellParent.transform.position.y);
+            var position = _cellParent.transform.position;
+            var pos = new Vector2(position.x - ((CELL_SIZE * m_gridSize.x) / 2), position.y);
             
             return pos;
         }
-        
+
+        public Dictionary<Vector2, Cell> GetAllCells()
+        {
+            return _cells;
+        }
     }
 }

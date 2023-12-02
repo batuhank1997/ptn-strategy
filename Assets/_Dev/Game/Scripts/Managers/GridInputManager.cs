@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.Entities.Units;
+using _Dev.Game.Scripts.Entities.Units.AttackUnits;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -34,13 +37,33 @@ namespace _Dev.Game.Scripts.Managers
             if (_selectedCell == null) 
                 return;
 
+            var targetCell = GridManager.Instance.GetCell(((Vector2Arguments) obj).Value);
             var product = _selectedCell.GetProductAndAmount().Item1;
             
             if (product is not Unit unit) 
                 return;
+            
+            StartCoroutine(StartUnitMovementRoutine(unit, targetCell));
+        }
+        
+        private IEnumerator StartUnitMovementRoutine(Unit unit, Cell targetCell)
+        {
+            var path = PathFinder.FindPath(_selectedCell.GetCoordinates(), targetCell.GetCoordinates());
+            
+            if (path == null)
+                yield return null;
 
-            //todo: implement move logic
-            //unit.UnitMover.MoveUp();
+            var delay = new WaitForSeconds(0.15f);
+            
+            while (path.Count > 0)
+            {
+                var nextCell = path.First();
+                path.Remove(nextCell);
+                _selectedCell.ResetCell();
+                nextCell.PlaceUnit(unit);
+                _selectedCell = nextCell;                
+                yield return delay;
+            }
         }
 
         private void OnProductionProductClicked(EventArgs obj)
