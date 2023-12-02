@@ -62,23 +62,60 @@ namespace _Dev.Game.Scripts.UI.Views
 
         private void DisplayInfo(Cell cell)
         {
-            // var cellProduct = cell.GetProductAndAmount();
-            // var product = cellProduct.Item1;
-            // var amount = cellProduct.Item2;
-            // var info = product.GetProductData();
+            var cellBuilding = cell.GetBuilding();
+            var cellUnits = cell.GetUnits();
             
-            // m_icon.sprite = info.Icon;
-            // m_nameText.text = info.Name;
-            // m_healthText.text = $"Health: {product.Health.GetValue()}";
-            // m_amountText.text = product is Unit ? $"x {amount}" : "";
+            if (cellBuilding != null)
+                DisplayBuildingInfo(cellBuilding);
+            else if (cellUnits.Count > 0)
+                DisplayUnitsInfo(cellUnits);
+        }
+        
+        private void DisplayBuildingInfo(Building building)
+        {
+            var info = building.GetProductData();
             
-            // foreach (var element in _productionElements)
-                // Destroy(element);
+            DisplayProductInfo(info);
+            m_amountText.text = "";
             
-            // _productionElements.Clear();
+            foreach (var element in _productionElements)
+                Destroy(element);
+            
+            _productionElements.Clear();
 
-            // if (info.Producer != null)
-                // CreateProductElements(info.Producer);
+            if (info.Producer != null)
+                CreateProductElements(info.Producer);
+        }
+        
+        private void DisplayUnitsInfo(List<Unit> units)
+        {
+            var info = units[0].GetProductData();
+            
+            DisplayProductInfo(info);
+            m_amountText.text = $"x {units.Count}";
+            
+            foreach (var element in _productionElements)
+                Destroy(element);
+            
+            _productionElements.Clear();
+
+            if (info.Producer != null)
+                CreateProductElements(info.Producer);
+        }
+        
+        private void DisplayProductInfo(ProductData info)
+        {
+            m_icon.sprite = info.Icon;
+            m_nameText.text = info.Name;
+            m_healthText.text = $"Health: {info.Product.Health.GetValue()}";
+            
+            foreach (var element in _productionElements)
+                Destroy(element);
+            
+            _productionElements.Clear();
+
+            if (info.Producer != null)
+                CreateProductElements(info.Producer);
         }
         
         private void CreateProductElements(IProducer producer)

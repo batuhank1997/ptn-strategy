@@ -17,7 +17,8 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             {
                 Icon = ImageContainer.Instance.PowerPlantIcon,
                 Name = _buildingSo.Name,
-                Producer = null
+                Producer = null,
+                Product = this
             };
         }
     }

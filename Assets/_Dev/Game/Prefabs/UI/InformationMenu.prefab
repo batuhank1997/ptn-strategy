@@ -331,8 +331,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3411718850313949718}
   - component: {fileID: 3411718850313949716}
-  - component: {fileID: 3411718850313949717}
   - component: {fileID: -4448784216254539080}
+  - component: {fileID: 3411718850313949717}
   m_Layer: 5
   m_Name: InformationMenu
   m_TagString: Untagged
@@ -370,6 +370,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3411718850313949719}
   m_CullTransparentMesh: 1
+--- !u!114 &-4448784216254539080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3411718850313949719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7749b59f56ba4f6c8044e97f5282fed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_productionElement: {fileID: 5051140278831565403, guid: 4deec394d4f77304d90634580c3abab5, type: 3}
+  m_productInfoParent: {fileID: 3298260743866983199}
+  m_productionParent: {fileID: 1308918032280528458}
+  m_icon: {fileID: 3046324341885066057}
+  m_nameText: {fileID: 2419784049036603970}
+  m_healthText: {fileID: 7972104286980908620}
+  m_amountText: {fileID: 8042411041192871022}
 --- !u!114 &3411718850313949717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,25 +419,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-4448784216254539080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3411718850313949719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7749b59f56ba4f6c8044e97f5282fed3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_productionElement: {fileID: 5051140278831565403, guid: 4deec394d4f77304d90634580c3abab5, type: 3}
-  m_productInfoParent: {fileID: 3298260743866983199}
-  m_productionParent: {fileID: 1308918032280528458}
-  m_icon: {fileID: 3046324341885066057}
-  m_nameText: {fileID: 2419784049036603970}
-  m_healthText: {fileID: 7972104286980908620}
-  m_amountText: {fileID: 8042411041192871022}
 --- !u!1 &3571938574057462631
 GameObject:
   m_ObjectHideFlags: 0

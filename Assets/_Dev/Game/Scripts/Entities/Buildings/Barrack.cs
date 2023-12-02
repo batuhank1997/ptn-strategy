@@ -41,7 +41,8 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             {
                 Icon = ImageContainer.Instance.BarracksIcon,
                 Name = _buildingSo.Name,
-                Producer = this
+                Producer = this,
+                Product = this
             };
         }
 
