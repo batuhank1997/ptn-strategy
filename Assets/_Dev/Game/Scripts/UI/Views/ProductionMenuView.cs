@@ -13,14 +13,13 @@ namespace _Dev.Game.Scripts.UI.Views
         [SerializeField] private ProductView m_productViewPrefab;
 
         private List<ScrollerData> _data;
-        private BuildingFactory  _buildingFactory = new BuildingFactory();
 
         private void Start() 
         {
             _data = new List<ScrollerData>();
             
-            var barrack = _buildingFactory.Create<Barrack>();
-            var powerPlant = _buildingFactory.Create<PowerPlant>();
+            var barrack = BuildingFactory.Create<Barrack>();
+            var powerPlant = BuildingFactory.Create<PowerPlant>();
 
             _data.Add(new ScrollerData()
             {

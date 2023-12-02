@@ -10,7 +10,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
 {
     public class Barrack : Building, IProducer
     {
-        private UnitFactory _unitFactory = new UnitFactory();
         public List<ProductData> ProducableProducts { get; set; }
         public Vector2 SpawnPosition { get; set; }
         
@@ -23,9 +22,9 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             
             ProducableProducts = new List<ProductData>
             {
-                _unitFactory.Create<Soldier1>().GetProductData(),
-                _unitFactory.Create<Soldier2>().GetProductData(),
-                _unitFactory.Create<Soldier3>().GetProductData()
+                UnitFactory.Create<Soldier1>().GetProductData(),
+                UnitFactory.Create<Soldier2>().GetProductData(),
+                UnitFactory.Create<Soldier3>().GetProductData()
             };
         }
 
@@ -38,21 +37,19 @@ namespace _Dev.Game.Scripts.Entities.Buildings
 
         public void Produce(Cell spawnCell, Type type)
         {
-            var unitFactory = new UnitFactory();
-            
             if (type == typeof(Soldier1))
             {
-                var soldier = unitFactory.Create<Soldier1>();
+                var soldier = UnitFactory.Create<Soldier1>();
                 spawnCell.PlaceUnit(soldier);
             }
             else if (type == typeof(Soldier2))
             {
-                var soldier = unitFactory.Create<Soldier2>();
+                var soldier = UnitFactory.Create<Soldier2>();
                 spawnCell.PlaceUnit(soldier);
             }
             else if (type == typeof(Soldier3))
             {
-                var soldier = unitFactory.Create<Soldier3>();
+                var soldier = UnitFactory.Create<Soldier3>();
                 spawnCell.PlaceUnit(soldier);
             }
         }
