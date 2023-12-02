@@ -1,3 +1,4 @@
+using System;
 using EnhancedUI.EnhancedScroller;
 using TMPro;
 using UnityEngine;
@@ -11,11 +12,19 @@ namespace _Dev.Game.Scripts.UI.Views
         [SerializeField] private Image m_image;
         [SerializeField] private TextMeshProUGUI m_tmp;
 
+        private ScrollerData _scrollerData;
+        
         public void SetData(ScrollerData scrollerData)
         {
-            m_tmp.text = scrollerData.ProductName;
-            m_image.sprite = scrollerData.ProductImage;
-            m_button.onClick.AddListener(()=> scrollerData.OnClick.Invoke());
+            _scrollerData = scrollerData;
+            m_tmp.text = _scrollerData.ProductName;
+            m_image.sprite = _scrollerData.ProductImage;
+            m_button.onClick.AddListener(delegate { _scrollerData.OnClick.Invoke(); });
+        }
+
+        private void OnDestroy()
+        {
+            m_button.onClick.RemoveListener(delegate { _scrollerData.OnClick.Invoke(); });
         }
     }
 }

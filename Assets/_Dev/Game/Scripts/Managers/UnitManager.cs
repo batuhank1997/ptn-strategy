@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Units;
@@ -44,7 +43,7 @@ namespace _Dev.Game.Scripts.Managers
             
             var targetCell = GridManager.Instance.GetCell(args.Value);
 
-            if (_units == null || _unitsCell == null)
+            if (_units == null || _unitsCell.GetUnits() == null)
                 return;
 
             StartCoroutine(StartUnitMovementRoutine(_unitsCell, targetCell));
@@ -54,22 +53,19 @@ namespace _Dev.Game.Scripts.Managers
         {
             var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
             
-            if (path == null)
-                yield return null;
-
             var delay = new WaitForSeconds(0.15f);
-            
-            while (path.Count > 0)
-            {
-                var nextCell = path.First();
-                path.Remove(nextCell);
-                currentCell.ResetCell();
-                
-                foreach (var t in _units)
-                    nextCell.PlaceUnit(t);
 
-                currentCell = nextCell;                
+            if (path == null) yield break;
+            
+            var count = path.Count;
+            
+            for (var i = 1; i < count; i++)
+            {
+                var cell = path[i];
+
+                cell.PlaceUnit(_units[0]);
                 yield return delay;
+                cell.ResetCell();
             }
         }
     }

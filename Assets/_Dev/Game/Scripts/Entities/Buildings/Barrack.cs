@@ -13,9 +13,10 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         public List<ProductData> ProducableProducts { get; set; }
         public Vector2 SpawnPosition { get; set; }
         
-        public Barrack() : base()
+        public Barrack()
         {
             //todo: refactor this
+            Debug.Log($"constructor {this}");
             _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
             
             EventSystemManager.AddListener(EventId.on_production_product_clicked, OnProducableProductClick);
@@ -27,9 +28,16 @@ namespace _Dev.Game.Scripts.Entities.Buildings
                 UnitFactory.Create<Soldier3>().GetProductData()
             };
         }
-
-        private void OnProducableProductClick(EventArgs obj)
+        
+        public void CleanUp()
         {
+            Debug.Log($"CleanUp {this}");
+            EventSystemManager.RemoveListener(EventId.on_production_product_clicked, OnProducableProductClick);
+        }
+        
+        public void OnProducableProductClick(EventArgs obj)
+        {
+            Debug.Log($"OnProducableProductClick {obj}");
             var args = (TypeArguments) obj;
             var spawnCell = GridManager.Instance.GetCell(SpawnPosition);
             Produce(spawnCell, args.Type);
