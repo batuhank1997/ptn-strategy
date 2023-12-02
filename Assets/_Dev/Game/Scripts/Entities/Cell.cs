@@ -41,13 +41,14 @@ namespace _Dev.Game.Scripts.Entities
 
         public void PlaceBuilding(Building buildingToPlace)
         {
-            m_countText.text = "";
+            m_countText.gameObject.SetActive(false);
             _building = buildingToPlace;
             SetCellVisual(CellState.HasBuilding);
         }
         
         public void PlaceUnit(Unit unit)
         {
+            m_countText.gameObject.SetActive(true);
             m_countText.text = (_units.Count + 1).ToString();
             _units.Add(unit);
             SetSprite(unit.GetProductData().Icon);
