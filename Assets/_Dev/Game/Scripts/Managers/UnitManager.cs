@@ -15,6 +15,8 @@ namespace _Dev.Game.Scripts.Managers
     {
         private List<Unit> _units;
         private Cell _unitsCell;
+
+        private readonly WaitForSeconds _delay = new WaitForSeconds(0.1f);
         
         public void Initilize()
         {
@@ -65,7 +67,6 @@ namespace _Dev.Game.Scripts.Managers
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
             var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
-            var delay = new WaitForSeconds(0.1f);
 
             var count = path.Count;
             
@@ -75,7 +76,7 @@ namespace _Dev.Game.Scripts.Managers
                 
                 cell.PlaceUnits(_units);
                 
-                yield return delay;
+                yield return _delay;
 
                 if (cell != targetCell)
                     cell.ResetCell();
