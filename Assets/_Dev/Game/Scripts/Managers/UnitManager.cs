@@ -59,18 +59,17 @@ namespace _Dev.Game.Scripts.Managers
 
         private void Attack()
         {
-            
+            Debug.Log($"attack");
         }
 
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
             var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
-            path.Remove(path.First());
             var delay = new WaitForSeconds(0.1f);
 
             var count = path.Count;
             
-            for (var i = 0; i < count; i++)
+            for (var i = 1; i < count; i++)
             {
                 var cell = path[i];
                 
@@ -80,7 +79,6 @@ namespace _Dev.Game.Scripts.Managers
 
                 if (cell != targetCell)
                     cell.ResetCell();
-                
             }
         }
     }
