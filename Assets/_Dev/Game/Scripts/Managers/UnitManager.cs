@@ -45,12 +45,23 @@ namespace _Dev.Game.Scripts.Managers
             
             var targetCell = GridManager.Instance.GetCell(args.Value);
 
+            if (targetCell.GetBuilding() != null)
+            {
+                Attack();
+                return;
+            }
+
             if (_units == null || _unitsCell.GetUnits() == null)
                 return;
 
             StartCoroutine(StartUnitMovementRoutine(_unitsCell, targetCell));
         }
-        
+
+        private void Attack()
+        {
+            
+        }
+
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
             var path = new List<Cell>(PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates()));
@@ -62,8 +73,8 @@ namespace _Dev.Game.Scripts.Managers
             for (var i = 0; i < count; i++)
             {
                 var cell = path[i];
-
-                cell.PlaceUnit(_units[0]);
+                
+                cell.PlaceUnits(_units);
                 
                 yield return delay;
 

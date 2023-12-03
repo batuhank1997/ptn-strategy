@@ -44,17 +44,17 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             if (type == typeof(Soldier1))
             {
                 var soldier = UnitFactory.Create<Soldier1>();
-                spawnCell.PlaceUnit(soldier);
+                spawnCell.PlaceUnits(new List<Unit> {soldier});
             }
             else if (type == typeof(Soldier2))
             {
                 var soldier = UnitFactory.Create<Soldier2>();
-                spawnCell.PlaceUnit(soldier);
+                spawnCell.PlaceUnits(new List<Unit> {soldier});
             }
             else if (type == typeof(Soldier3))
             {
                 var soldier = UnitFactory.Create<Soldier3>();
-                spawnCell.PlaceUnit(soldier);
+                spawnCell.PlaceUnits(new List<Unit> {soldier});
             }
         }
         

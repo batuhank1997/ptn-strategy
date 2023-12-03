@@ -55,11 +55,11 @@ namespace _Dev.Game.Scripts.Entities
             SetCellVisual(CellState.HasBuilding);
         }
         
-        public void PlaceUnit(Unit unit)
+        public void PlaceUnits(List<Unit> units)
         {
+            _units.AddRange(units);
             m_countText.gameObject.SetActive(true);
             m_countText.text = (_units.Count + 1).ToString();
-            _units.Add(unit);
             SetCellVisual(CellState.HasUnit);
         }
 
