@@ -67,6 +67,7 @@ namespace _Dev.Game.Scripts.Managers
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
             var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
+            
             var count = path.Count;
             
             for (var i = 1; i < count; i++)
@@ -77,7 +78,7 @@ namespace _Dev.Game.Scripts.Managers
                 
                 yield return _delay;
 
-                if (cell != targetCell)
+                if (i != count - 1)
                     cell.ResetCell();
             }
         }
