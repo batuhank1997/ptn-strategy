@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Units;
@@ -24,6 +25,7 @@ namespace _Dev.Game.Scripts.Managers
 
         private void OnDestroy()
         {
+            _units.Clear();
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
             EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellTargeted);
         }
@@ -51,21 +53,23 @@ namespace _Dev.Game.Scripts.Managers
         
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
-            var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
-            
-            var delay = new WaitForSeconds(0.15f);
+            var path = new List<Cell>(PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates()));
+            path.Remove(path.First());
+            var delay = new WaitForSeconds(0.1f);
 
-            if (path == null) yield break;
-            
             var count = path.Count;
             
-            for (var i = 1; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var cell = path[i];
 
                 cell.PlaceUnit(_units[0]);
+                
                 yield return delay;
-                cell.ResetCell();
+
+                if (cell != targetCell)
+                    cell.ResetCell();
+                
             }
         }
     }

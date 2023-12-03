@@ -1,4 +1,5 @@
-﻿using _Dev.Game.Scripts.Entities;
+﻿using System;
+using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace _Dev.Game.Scripts.Managers
         {
             _mainCamera = Camera.main;
         }
-        
+
         private void Update()
         {
             HandleInput();

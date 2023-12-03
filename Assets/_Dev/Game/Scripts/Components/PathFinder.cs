@@ -8,10 +8,12 @@ namespace _Dev.Game.Scripts.Components
 {
     public static class PathFinder
     {
-        private static readonly Dictionary<Vector2, Cell> _cells = GridManager.Instance.GetAllCells();
+        private static Dictionary<Vector2, Cell> _cells;
 
         public static List<Cell> FindPath(Vector2 startPosition, Vector2 targetPosition)
         {
+            _cells = GridManager.Instance.GetAllCells();
+            
             var openSet = new HashSet<Vector2>();
             var closedSet = new HashSet<Vector2>();
             var cameFrom = new Dictionary<Vector2, Vector2>();

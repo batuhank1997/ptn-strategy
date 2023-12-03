@@ -28,13 +28,20 @@ namespace _Dev.Game.Scripts.UI.Views
         protected override void OnEnable()
         {
             EventSystemManager.AddListener(EventId.on_grid_left_click, OnCellClicked);
+            EventSystemManager.AddListener(EventId.on_grid_right_click, OnCellRightClicked);
             ToggleInfoPanel(false);
             base.OnEnable();
         }
-        
+
+        private void OnCellRightClicked(EventArgs obj)
+        {
+            ToggleInfoPanel(false);
+        }
+
         protected override void OnDisable()
         {
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellClicked);
+            EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellRightClicked);
             base.OnDisable();
         }
 

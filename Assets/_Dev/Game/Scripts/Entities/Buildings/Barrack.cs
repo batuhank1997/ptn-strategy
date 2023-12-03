@@ -16,9 +16,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         public Barrack()
         {
             //todo: refactor this
-            Debug.Log($"constructor {this}");
             _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
-            
             EventSystemManager.AddListener(EventId.on_production_product_clicked, OnProducableProductClick);
             
             ProducableProducts = new List<ProductData>
@@ -31,13 +29,11 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         
         public void CleanUp()
         {
-            Debug.Log($"CleanUp {this}");
             EventSystemManager.RemoveListener(EventId.on_production_product_clicked, OnProducableProductClick);
         }
         
         public void OnProducableProductClick(EventArgs obj)
         {
-            Debug.Log($"OnProducableProductClick {obj}");
             var args = (TypeArguments) obj;
             var spawnCell = GridManager.Instance.GetCell(SpawnPosition);
             Produce(spawnCell, args.Type);
