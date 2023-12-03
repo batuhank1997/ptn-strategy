@@ -64,7 +64,7 @@ namespace _Dev.Game.Scripts.Managers
 
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
-            var path = new List<Cell>(PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates()));
+            var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
             path.Remove(path.First());
             var delay = new WaitForSeconds(0.1f);
 
