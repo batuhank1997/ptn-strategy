@@ -27,7 +27,7 @@ namespace _Dev.Game.Scripts.Managers
 
         private void OnDestroy()
         {
-            _units.Clear();
+            _units?.Clear();
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
             EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellTargeted);
         }
@@ -50,7 +50,7 @@ namespace _Dev.Game.Scripts.Managers
             if (targetCell.GetBuilding() != null)
             {
                 Attack();
-                return;
+                // return;
             }
 
             if (_units == null || _unitsCell.GetUnits() == null)
@@ -67,7 +67,6 @@ namespace _Dev.Game.Scripts.Managers
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
             var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
-
             var count = path.Count;
             
             for (var i = 1; i < count; i++)
