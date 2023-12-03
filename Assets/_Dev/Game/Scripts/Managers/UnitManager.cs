@@ -20,19 +20,19 @@ namespace _Dev.Game.Scripts.Managers
         
         public void Initilize()
         {
-            EventSystemManager.AddListener(EventId.on_grid_left_click, OnCellSelected);
-            EventSystemManager.AddListener(EventId.on_grid_right_click, OnCellTargeted);
+            EventSystemManager.AddListener(EventId.on_grid_left_click, OnLeftClick);
+            EventSystemManager.AddListener(EventId.on_grid_right_click, OnRightClick);
         }
 
 
         private void OnDestroy()
         {
             _units?.Clear();
-            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
-            EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellTargeted);
+            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnLeftClick);
+            EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnRightClick);
         }
 
-        private void OnCellSelected(EventArgs obj)
+        private void OnLeftClick(EventArgs obj)
         {
             var args = (Vector2Arguments) obj;
             
@@ -41,7 +41,7 @@ namespace _Dev.Game.Scripts.Managers
             _units = _unitsCell.GetUnits();
         }
         
-        private void OnCellTargeted(EventArgs obj)
+        private void OnRightClick(EventArgs obj)
         {
             var args = (Vector2Arguments) obj;
             
@@ -67,20 +67,25 @@ namespace _Dev.Game.Scripts.Managers
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
             var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
+            var units = new List<Unit>(_units);
+            var sprite = units.First().GetProductData().Icon;
             
-            var count = path.Count;
-            
-            for (var i = 1; i < count; i++)
-            {
-                var cell = path[i];
-                
-                cell.PlaceUnits(_units);
-                
-                yield return _delay;
+            _unitsCell.ResetCell();
 
-                if (i != count - 1)
-                    cell.ResetCell();
+            foreach (var cell in path)
+            {
+                if (cell == path.Last() || cell == path.First())
+                    continue;
+
+                yield return _delay;
+                cell.PlayMovingAnimation(sprite);
             }
+            
+            units.ForEach(unit =>
+            {
+                unit.Mover.MoveToAlongPath(path, unit);
+            });
+            
         }
     }
 }

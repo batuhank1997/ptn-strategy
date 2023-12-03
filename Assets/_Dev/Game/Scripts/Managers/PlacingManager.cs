@@ -45,13 +45,13 @@ namespace _Dev.Game.Scripts.Managers
             _cellsToPlace.ForEach(c => c.PlaceBuilding(_buildingToPlace));
             
             if (_buildingToPlace is IProducer producer)
-                producer.SpawnPosition = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0);
+                producer.SpawnPosition = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0); //todo: refactor
             
             _buildingToPlace = null;
             _cellsToPlace.Clear();
         }
         
-        public void SetPlacableCellVisuals(Cell cellUnderCursor)
+        public void SetPlacableCellVisualsIfPlacing(Cell cellUnderCursor)
         {
             if (_buildingToPlace == null) return;
 

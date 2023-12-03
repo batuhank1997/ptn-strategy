@@ -46,7 +46,8 @@ namespace _Dev.Game.Scripts.Managers
             if (!_cellUnderCursor.IsOccupied)
                 _cellUnderCursor.SetCellVisual(CellState.UnderCursor);
             
-            PlacingManager.Instance.SetPlacableCellVisuals(_cellUnderCursor);
+            //todo: refactor
+            PlacingManager.Instance.SetPlacableCellVisualsIfPlacing(_cellUnderCursor);
         }
 
         private void HandleLeftClick()

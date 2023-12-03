@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.Entities.Units;
@@ -61,6 +62,18 @@ namespace _Dev.Game.Scripts.Entities
             m_countText.gameObject.SetActive(true);
             m_countText.text = (_units.Count).ToString();
             SetCellVisual(CellState.HasUnit);
+        }
+
+        public void PlayMovingAnimation(Sprite animSprite)
+        {
+            StartCoroutine(PlayAnim(animSprite));
+        }
+
+        private IEnumerator PlayAnim(Sprite animSprite)
+        {
+            SetSprite(animSprite);
+            yield return new WaitForSeconds(0.1f);
+            SetSprite(m_emptySprite);
         }
 
         public Vector2 GetCoordinates()
