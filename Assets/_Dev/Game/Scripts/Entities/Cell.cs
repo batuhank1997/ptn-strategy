@@ -20,7 +20,7 @@ namespace _Dev.Game.Scripts.Entities
         
         public bool IsOccupied => _units.Count != 0 || _building != null;
 
-        private List<Unit> _units = new List<Unit>();
+        private readonly List<Unit> _units = new List<Unit>();
         private Building _building;
 
         private const float SELECTED_ALPHA = 0.8f;
@@ -59,7 +59,7 @@ namespace _Dev.Game.Scripts.Entities
         {
             _units.AddRange(units);
             m_countText.gameObject.SetActive(true);
-            m_countText.text = (_units.Count + 1).ToString();
+            m_countText.text = (_units.Count).ToString();
             SetCellVisual(CellState.HasUnit);
         }
 
