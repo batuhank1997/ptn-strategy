@@ -5,6 +5,7 @@ using System.Linq;
 using _Dev.Game.Scripts.Components;
 using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.Entities.Units;
+using _Dev.Game.Scripts.Entities.Units.AttackUnits;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace _Dev.Game.Scripts.Managers
     {
         private List<Unit> _units;
         private Cell _unitsCell;
+
+        private delegate void UnitAttack();
+        private UnitAttack _unitAttacks;
 
         private readonly WaitForSeconds _delay = new WaitForSeconds(0.1f);
         
@@ -46,12 +50,15 @@ namespace _Dev.Game.Scripts.Managers
             var args = (Vector2Arguments) obj;
             
             var targetCell = GridManager.Instance.GetCell(args.Value);
+            var targetBuilding = targetCell.GetBuilding();
+            var targetUnits = targetCell.GetUnits();
 
-            if (targetCell.GetBuilding() != null)
-            {
-                Attack();
-                // return;
-            }
+            if (targetBuilding != null)
+                _unitAttacks = Attack(targetBuilding.GetProductData().Product);
+            else if (targetUnits.Count > 0)
+                _unitAttacks = Attack(targetUnits.First());
+            else
+                _unitAttacks = null;
 
             if (_units == null || _unitsCell.GetUnits() == null)
                 return;
@@ -59,9 +66,18 @@ namespace _Dev.Game.Scripts.Managers
             StartCoroutine(StartUnitMovementRoutine(_unitsCell, targetCell));
         }
 
-        private void Attack()
+        private UnitAttack Attack(IProduct target)
         {
             Debug.Log($"attack");
+            
+            _units.ForEach(unit =>
+            {
+                ((Soldier)unit).DamageDealer.DealDamage(target);
+            });
+            
+            _unitAttacks = null;
+
+            return null;
         }
 
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
@@ -86,6 +102,7 @@ namespace _Dev.Game.Scripts.Managers
                 unit.Mover.MoveToAlongPath(path, unit);
             });
             
+            _unitAttacks?.Invoke();
         }
     }
 }

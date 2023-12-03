@@ -9,7 +9,7 @@ namespace _Dev.Game.Scripts.Entities.Units.AttackUnits
             Mover = new UnitMover();
         }
         
-        protected DamageDealer _damageDealer;
+        public DamageDealer DamageDealer { get; set; }
         public abstract override ProductData GetProductData();
     }
 }
