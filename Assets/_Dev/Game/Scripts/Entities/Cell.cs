@@ -57,6 +57,14 @@ namespace _Dev.Game.Scripts.Entities
             SetCellVisual(CellState.HasBuilding);
         }
         
+        public void PlaceUnit(Unit unit)
+        {
+            _units.Add(unit);
+            m_countText.gameObject.SetActive(true);
+            m_countText.text = (_units.Count).ToString();
+            SetCellVisual(CellState.HasUnit);
+        }
+        
         public void PlaceUnits(List<Unit> units)
         {
             _units.AddRange(units);
@@ -64,17 +72,14 @@ namespace _Dev.Game.Scripts.Entities
             m_countText.text = (_units.Count).ToString();
             SetCellVisual(CellState.HasUnit);
         }
-
-        public void PlayMovingAnimation(Sprite animSprite)
+        
+        private void RemoveUnit(Unit unit)
         {
-            StartCoroutine(PlayAnim(animSprite));
-        }
-
-        private IEnumerator PlayAnim(Sprite animSprite)
-        {
-            SetSprite(animSprite);
-            yield return new WaitForSeconds(0.1f);
-            SetSprite(m_emptySprite);
+            _units.Remove(unit);
+            m_countText.text = (_units.Count).ToString();
+            
+            if (_units.Count == 0)
+                ResetCell();
         }
 
         public Vector2 GetCoordinates()
@@ -96,6 +101,7 @@ namespace _Dev.Game.Scripts.Entities
         {
             _building = null;
             _units.Clear();
+            m_countText.gameObject.SetActive(false);
             SetCellVisual(CellState.Empty);
         }
         
@@ -131,6 +137,18 @@ namespace _Dev.Game.Scripts.Entities
             }
         }
         
+        public void PlayMovingAnimation(Sprite animSprite)
+        {
+            StartCoroutine(PlayAnim(animSprite));
+        }
+
+        private IEnumerator PlayAnim(Sprite animSprite)
+        {
+            SetSprite(animSprite);
+            yield return new WaitForSeconds(0.1f);
+            SetSprite(m_emptySprite);
+        }
+        
         private void OnCursorDirectionChanged(EventArgs obj)
         {
             if (_building != null)
@@ -149,17 +167,9 @@ namespace _Dev.Game.Scripts.Entities
             var args = (ProductArgs)obj;
 
             if (args.Product == _building)
-            {
                 ResetCell();
-            }
             else if(_units.Count > 0 && _units.Contains((args.Product as Unit)))
-            {
-                _units.Remove((Unit)args.Product);
-                m_countText.text = (_units.Count).ToString();
-                
-                if (_units.Count == 0)
-                    SetCellVisual(CellState.Empty);
-            }
+                RemoveUnit((args.Product as Unit));
         }
 
         private void SetCellSpriteAlpha(float a)

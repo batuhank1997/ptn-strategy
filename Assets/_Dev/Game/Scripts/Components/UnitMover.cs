@@ -10,7 +10,7 @@ namespace _Dev.Game.Scripts.Components
         public void MoveToAlongPath(List<Cell> path, Unit unitToMove)
         {
             var target = path.Last();
-            target.PlaceUnits(new List<Unit>() { unitToMove });
+            target.PlaceUnit(unitToMove);
         }
     }
 }
