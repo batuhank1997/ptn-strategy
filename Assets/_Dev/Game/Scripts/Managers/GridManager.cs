@@ -9,12 +9,13 @@ namespace _Dev.Game.Scripts.Managers
     {
         [SerializeField] private Cell m_cell;
         [SerializeField] private Vector2 m_gridSize;
+        public bool IsDebugging { get; set; }
         
         private readonly Dictionary<Vector2, Cell> _cells = new Dictionary<Vector2, Cell>();
         private GameObject _cellParent;
         
         private const float CELL_SIZE = 1f;
-        
+
         public void Initilize()
         {
             CreateGameBoard();
@@ -56,7 +57,7 @@ namespace _Dev.Game.Scripts.Managers
                     var cell = Instantiate(m_cell,  GetGridStartPos() + pos * CELL_SIZE, Quaternion.identity);
                     _cells.Add(pos, cell);
                     
-                    cell.Init(pos);
+                    cell.Init(pos, IsDebugging);
                     cell.transform.SetParent(_cellParent.transform);
                 }
             }
