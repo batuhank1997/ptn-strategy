@@ -12,8 +12,8 @@ namespace _Dev.Game.Scripts.UI.Views
 {
     public class ProductionMenuView : View, IEnhancedScrollerDelegate
     {
-        [SerializeField] private EnhancedScroller m_myScroller;
-        [SerializeField] private ProductView m_productViewPrefab;
+        [SerializeField] private EnhancedScroller m_scroller;
+        [SerializeField] private ProductViewItem m_productViewItemPrefab;
 
         private List<ScrollerData> _data;
 
@@ -23,22 +23,17 @@ namespace _Dev.Game.Scripts.UI.Views
         private Soldier2 _soldier2;
         private Soldier3 _soldier3;
 
-        private void Start()
+        public void Start()
         {
             CreateItems();
             AddItemsInMenu();
 
-            m_myScroller.Delegate = this;
-            m_myScroller.ReloadData();
+            m_scroller.Delegate = this;
+            m_scroller.ReloadData();
 
             base.OnEnable();
         }
-
-        private void OnDestroy()
-        {
-            _barrack.CleanUp();
-        }
-
+        
         public int GetNumberOfCells(EnhancedScroller scroller)
         {
             return _data.Count;
@@ -51,7 +46,7 @@ namespace _Dev.Game.Scripts.UI.Views
 
         public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
-            var cellView = scroller.GetCellView(m_productViewPrefab) as ProductView;
+            var cellView = scroller.GetCellView(m_productViewItemPrefab) as ProductViewItem;
 
             cellView.SetData(_data[dataIndex]);
 

@@ -144,9 +144,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1388161738620266352}
-  - component: {fileID: 6167986980215135686}
+  - component: {fileID: 7998366735155334207}
+  - component: {fileID: 1168079986152583621}
   m_Layer: 5
-  m_Name: ProductionsParent
+  m_Name: ProductionsScroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,12 +168,12 @@ RectTransform:
   m_Father: {fileID: 3411718850313949718}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -149.9}
-  m_SizeDelta: {x: 0, y: 300}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -117.49999}
+  m_SizeDelta: {x: 0, y: -235.00002}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6167986980215135686
+--- !u!114 &7998366735155334207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,21 +182,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 1308918032280528458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Padding:
+  m_Content: {fileID: 0}
+  m_Horizontal: 1
+  m_Vertical: 1
+  m_MovementType: 1
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 0}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 0}
+  m_HorizontalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 0
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1168079986152583621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308918032280528458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1b74f910281224a8cae6d8e4fc1f43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollDirection: 0
+  spacing: 0
+  padding:
     m_Left: 0
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
-  m_Spacing: {x: 20, y: 25}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  loop: 0
+  loopWhileDragging: 1
+  maxVelocity: 0
+  scrollbarVisibility: 0
+  snapping: 0
+  snapVelocityThreshold: 0
+  snapWatchOffset: 0
+  snapJumpToOffset: 0
+  snapCellCenterOffset: 0
+  snapUseCellSpacing: 0
+  snapTweenType: 0
+  snapTweenTime: 0
+  snapWhileDragging: 0
+  forceSnapOnEndDrag: 0
+  interruptTweeningOnDrag: 0
+  tweenPaused: 0
+  _scrollPosition: 0
 --- !u!1 &2603432848956384485
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +425,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7749b59f56ba4f6c8044e97f5282fed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_productionElement: {fileID: 5051140278831565403, guid: 4deec394d4f77304d90634580c3abab5, type: 3}
+  m_scroller: {fileID: 1168079986152583621}
+  m_informationViewPrefab: {fileID: 3046621793665963955, guid: 2108b4ef71125a4479cc69606ca2f3b4, type: 3}
   m_productInfoParent: {fileID: 3298260743866983199}
   m_productionParent: {fileID: 1308918032280528458}
   m_icon: {fileID: 3046324341885066057}

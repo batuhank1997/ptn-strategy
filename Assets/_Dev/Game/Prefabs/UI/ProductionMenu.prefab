@@ -225,8 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f773399279a86404887a2cca9056424c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_myScroller: {fileID: 1340174131}
-  m_productViewPrefab: {fileID: 7007142569487931487, guid: 01ff4cf780f62994f9e3bc0384cc2f5c, type: 3}
+  m_scroller: {fileID: 1340174131}
+  m_productViewItemPrefab: {fileID: 7007142569487931487, guid: 01ff4cf780f62994f9e3bc0384cc2f5c, type: 3}
 --- !u!114 &7101739177842647430
 MonoBehaviour:
   m_ObjectHideFlags: 0
