@@ -14,7 +14,7 @@ namespace _Dev.Game.Scripts.Components
         public static List<Cell> FindPath(Vector2 startPosition, Vector2 targetPosition)
         {
             _cells = GridManager.Instance.GetAllCells();
-            
+
             var openSet = new HashSet<Vector2>();
             var closedSet = new HashSet<Vector2>();
             var cameFrom = new Dictionary<Vector2, Vector2>();
@@ -27,14 +27,19 @@ namespace _Dev.Game.Scripts.Components
 
             if (_cells.ContainsKey(targetPosition) && _cells[targetPosition].IsOccupied)
             {
-                targetPosition = FindClosestUnoccupiedCell(targetPosition, startPosition).First(cell => !cell.IsOccupied).GetCoordinates();
+                var cell = FindClosestUnoccupiedCell(targetPosition, startPosition)
+                    .FirstOrDefault(cell => !cell.IsOccupied);
+
+                if (cell != null)
+                    targetPosition = cell.GetCoordinates();
+                
                 Debug.Log($"[PATHFINDER] Target cell is occupied, closest unoccupied cell is {targetPosition}");
             }
 
             while (openSet.Count > 0)
             {
                 var current = GetLowestFScore(openSet, fScore);
-                
+
                 if (current == targetPosition)
                     return ReconstructPath(cameFrom, targetPosition);
 
@@ -49,7 +54,7 @@ namespace _Dev.Game.Scripts.Components
                     var tentativeGScore = gScore[current] + CalculateCost(current, neighbor);
 
                     if (openSet.Contains(neighbor) && !(tentativeGScore < gScore[neighbor])) continue;
-                    
+
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
                     fScore[neighbor] = gScore[neighbor] + Heuristic(neighbor, targetPosition);
@@ -75,7 +80,7 @@ namespace _Dev.Game.Scripts.Components
             foreach (var tile in openSet)
             {
                 if (!fScore.ContainsKey(tile) || !(fScore[tile] < lowestFScore)) continue;
-                
+
                 lowestFScore = fScore[tile];
                 lowestFScoreTile = tile;
             }
@@ -105,7 +110,7 @@ namespace _Dev.Game.Scripts.Components
 
             if (dx > 0 && dy > 0)
                 return Mathf.Sqrt(2);
-            
+
             return 1;
         }
 
@@ -123,23 +128,24 @@ namespace _Dev.Game.Scripts.Components
                 new(position.x - 1, position.y + 1)
             };
 
-            neighbors = checkOccupied ? 
-                neighbors.Where(neighbor => _cells.ContainsKey(neighbor) && !_cells[neighbor].IsOccupied).ToList() 
+            neighbors = checkOccupied
+                ? neighbors.Where(neighbor => _cells.ContainsKey(neighbor) && !_cells[neighbor].IsOccupied).ToList()
                 : neighbors.Where(neighbor => _cells.ContainsKey(neighbor)).ToList();
 
             return neighbors;
         }
 
-        private static List<Cell> FindClosestUnoccupiedCell(Vector2 reversedStartPosition, Vector2 reversedTargetPosition)
+        private static List<Cell> FindClosestUnoccupiedCell(Vector2 reversedStartPosition,
+            Vector2 reversedTargetPosition)
         {
             _cells = GridManager.Instance.GetAllCells();
-            
+
             var openSet = new HashSet<Vector2>();
             var closedSet = new HashSet<Vector2>();
             var cameFrom = new Dictionary<Vector2, Vector2>();
             var gScore = new Dictionary<Vector2, float>();
             var fScore = new Dictionary<Vector2, float>();
-            
+
             openSet.Add(reversedStartPosition);
             gScore[reversedStartPosition] = 0;
             fScore[reversedStartPosition] = Heuristic(reversedStartPosition, reversedTargetPosition);
@@ -147,7 +153,7 @@ namespace _Dev.Game.Scripts.Components
             while (openSet.Count > 0)
             {
                 var current = GetLowestFScore(openSet, fScore);
-                
+
                 if (current == reversedTargetPosition)
                     return ReconstructPath(cameFrom, reversedTargetPosition);
 
@@ -162,7 +168,7 @@ namespace _Dev.Game.Scripts.Components
                     var tentativeGScore = gScore[current] + UNI_COST;
 
                     if (openSet.Contains(neighbor) && !(tentativeGScore < gScore[neighbor])) continue;
-                    
+
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
                     fScore[neighbor] = gScore[neighbor] + Heuristic(neighbor, reversedTargetPosition);

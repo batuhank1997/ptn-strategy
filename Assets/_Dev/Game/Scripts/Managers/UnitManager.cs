@@ -60,7 +60,7 @@ namespace _Dev.Game.Scripts.Managers
             else
                 _unitAttacks = null;
 
-            if (_units == null || _unitsCell.GetUnits() == null)
+            if (_units == null || _unitsCell == null)
                 return;
 
             StartCoroutine(StartUnitMovementRoutine(_unitsCell, targetCell));
@@ -83,6 +83,10 @@ namespace _Dev.Game.Scripts.Managers
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
         {
             var path = PathFinder.FindPath(currentCell.GetCoordinates(), targetCell.GetCoordinates());
+
+            if (path == null)
+                yield break;
+            
             var units = new List<Unit>(_units);
             var sprite = units.First().GetProductData().Icon;
             
@@ -93,8 +97,8 @@ namespace _Dev.Game.Scripts.Managers
                 if (cell == path.Last() || cell == path.First())
                     continue;
 
-                yield return _delay;
                 cell.PlayMovingAnimation(sprite);
+                yield return _delay;
             }
             
             units.ForEach(unit =>
