@@ -20,13 +20,13 @@ namespace _Dev.Game.Scripts.Managers
 
         public void Initilize()
         {
-            EventSystemManager.AddListener(EventId.on_grid_left_click, OnCellSelected);
+            EventSystemManager.AddListener(EventId.on_grid_left_click, OnLeftClick);
             EventSystemManager.AddListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
 
         private void OnDestroy()
         {
-            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellSelected);
+            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnLeftClick);
             EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
 
@@ -43,24 +43,6 @@ namespace _Dev.Game.Scripts.Managers
         public void SetUnitForPlacing(Unit unit)
         {
             _unitToPlace = unit;
-        }
-
-        private void OnCellSelected(EventArgs obj)
-        {
-            if (_buildingToPlace != null && _canPlaceBuilding)
-            {
-                _cellsToPlace.ForEach(c => c.PlaceBuilding(_buildingToPlace));
-                if (_buildingToPlace is IProducer producer)
-                    producer.SpawnPosition = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0); //todo: refactor
-                _buildingToPlace = null;
-                _cellsToPlace.Clear();
-            }
-            else if (_unitToPlace != null && _canPlaceBuilding)
-            {
-                var cell = _cellsToPlace[0];
-                cell.PlaceUnits(new List<Unit>(){_unitToPlace});
-                _unitToPlace = null;
-            }
         }
         
         public void SetPlacableCellVisualsIfPlacing(Cell cellUnderCursor)
@@ -121,6 +103,45 @@ namespace _Dev.Game.Scripts.Managers
             cell.SetCellVisual(CellState.ReadyForPlacement);
                 
             _canPlaceBuilding = true;
+        }
+        
+        private void OnLeftClick(EventArgs obj)
+        {
+            if (_buildingToPlace != null && _canPlaceBuilding)
+            {
+                _cellsToPlace.ForEach(c => c.PlaceBuilding(_buildingToPlace));
+                
+                if (_buildingToPlace is IProducer producer)
+                    producer.SpawnPosition = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0); //todo: refactor
+                _buildingToPlace = null;
+                
+                _cellsToPlace.Clear();
+            }
+            else if (_unitToPlace != null && _canPlaceBuilding)
+            {
+                var cell = _cellsToPlace[0];
+                cell.PlaceUnits(new List<Unit>(){_unitToPlace});
+                _unitToPlace = null;
+            }
+        }
+        
+        private Vector2 GetFirstAvailableSpawnPoint()
+        {
+            var spawnPos = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0);
+            var firstPos = spawnPos;
+            var spawnCell = GridManager.Instance.GetCell(spawnPos);
+
+            while (spawnCell.IsOccupied)
+            {
+                if ((spawnPos + Vector2.up).y > firstPos.y)
+                {
+                    
+                }
+                spawnPos += new Vector2(1, 0);
+                spawnCell = GridManager.Instance.GetCell(spawnPos);
+            }
+            
+            return Vector2.zero;
         }
     }
 }
