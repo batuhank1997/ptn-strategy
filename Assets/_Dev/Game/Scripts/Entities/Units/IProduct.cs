@@ -8,6 +8,7 @@ namespace _Dev.Game.Scripts.Entities.Units
     {
         public Health Health { get; }
         ProductData GetProductData();
+        void Die();
     }
 
     public class ProductData

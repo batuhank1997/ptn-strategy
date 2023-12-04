@@ -16,6 +16,7 @@
         on_grid_left_click = 11,
         on_cursor_direction_changed = 12,
         on_production_product_clicked = 13,
+        on_product_die = 14,
         #endregion
     }
 }

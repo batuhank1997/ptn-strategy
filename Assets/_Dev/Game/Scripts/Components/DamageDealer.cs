@@ -15,7 +15,11 @@ namespace _Dev.Game.Scripts.Components
         public void DealDamage(IProduct target)
         {
             target.Health.Damage(_damage);
-            Debug.Log($"target: {target} health: {target.Health.GetValue()}");
+            
+            if (target.Health.GetValue() <= 0)
+                target.Die();
+
+            Debug.Log($"target: {target.GetProductData().Name} health: {target.Health.GetValue()}");
         }
     }
 }

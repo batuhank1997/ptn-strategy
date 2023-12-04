@@ -75,6 +75,8 @@ namespace _Dev.Game.Scripts.Managers
                 ((Soldier)unit).DamageDealer.DealDamage(target);
             });
             
+            Debug.Log(target.Health);
+            
             _unitAttacks = null;
 
             return null;

@@ -41,11 +41,13 @@ namespace _Dev.Game.Scripts.Entities
             
             SetCellVisual(CellState.Empty);
             EventSystemManager.AddListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
+            EventSystemManager.AddListener(EventId.on_product_die, OnProductDie);
         }
 
         private void OnDestroy()
         {
             EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
+            EventSystemManager.RemoveListener(EventId.on_product_die, OnProductDie);
         }
 
         public void PlaceBuilding(Building buildingToPlace)
@@ -96,17 +98,7 @@ namespace _Dev.Game.Scripts.Entities
             _units.Clear();
             SetCellVisual(CellState.Empty);
         }
-
-        private void OnCursorDirectionChanged(EventArgs obj)
-        {
-            if (_building != null)
-                SetCellVisual(CellState.HasBuilding);
-            else if (_units != null && _units.Count != 0)
-                SetCellVisual(CellState.HasUnit);
-            else
-                SetCellVisual(CellState.Empty);
-        }
-
+        
         //todo: refactor
         public void SetCellVisual(CellState state)
         {
@@ -136,6 +128,37 @@ namespace _Dev.Game.Scripts.Entities
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+        
+        private void OnCursorDirectionChanged(EventArgs obj)
+        {
+            if (_building != null)
+                SetCellVisual(CellState.HasBuilding);
+            else if (_units != null && _units.Count != 0)
+                SetCellVisual(CellState.HasUnit);
+            else
+                SetCellVisual(CellState.Empty);
+        }
+        
+        private void OnProductDie(EventArgs obj)
+        {
+            if (_units.Count <= 0 && _building == null) 
+                return;
+
+            var args = (ProductArgs)obj;
+
+            if (args.Product == _building)
+            {
+                ResetCell();
+            }
+            else if(_units.Count > 0 && _units.Contains((args.Product as Unit)))
+            {
+                _units.Remove((Unit)args.Product);
+                m_countText.text = (_units.Count).ToString();
+                
+                if (_units.Count == 0)
+                    SetCellVisual(CellState.Empty);
             }
         }
 

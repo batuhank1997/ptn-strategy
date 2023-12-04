@@ -6,7 +6,7 @@ namespace _Dev.Game.Scripts.Entities.Units.AttackUnits
     {
         public Soldier2()
         {
-            DamageDealer = new DamageDealer(5);
+            DamageDealer = new DamageDealer(50);
         }
         
         public override ProductData GetProductData()
