@@ -8,14 +8,14 @@ namespace _Dev.Game.Scripts.Entities.Units
     public abstract class BoardProduct
     {
         protected ProductSo _productSo;
-        protected Health _health;
+        private readonly Health _health;
         
         public abstract ProductData GetProductData();
 
         protected BoardProduct()
         {
-            _health = new Health();
-            _productSo = Resources.Load<ProductSo>($"Buildings/{this.GetType().Name}");
+            _productSo = Resources.Load<ProductSo>($"Products/{this.GetType().Name}");
+            _health = new Health(_productSo.HealthLimit);
         }
         
         public Vector2 GetSize()

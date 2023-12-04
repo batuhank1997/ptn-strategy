@@ -13,8 +13,8 @@ namespace _Dev.Game.Scripts.Entities.Units.AttackUnits
         {
             return new ProductData
             {
-                Icon = ImageContainer.Instance.Soldier2Icon,
-                Name = "Soldier 2",
+                Icon = _productSo.Icon,
+                Name = _productSo.Name,
                 Producer = null,
                 BoardProduct = this
             };

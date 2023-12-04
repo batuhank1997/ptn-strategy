@@ -58,15 +58,6 @@ namespace _Dev.Game.Scripts.UI.Views
             return cellView;
         }
 
-        private void AddItemsInMenu()
-        {
-            SetItemDataAndAdd(_barrack, () => PlacingManager.Instance.SetBuildingForPlacing(_barrack));
-            SetItemDataAndAdd(_powerPlant, () => PlacingManager.Instance.SetBuildingForPlacing(_powerPlant));
-            SetItemDataAndAdd(_soldier1, () => PlacingManager.Instance.SetUnitForPlacing(_soldier1));
-            SetItemDataAndAdd(_soldier2, () => PlacingManager.Instance.SetUnitForPlacing(_soldier2));
-            SetItemDataAndAdd(_soldier3, () => PlacingManager.Instance.SetUnitForPlacing(_soldier3));
-        }
-
         private void CreateItems()
         {
             _data = new List<ScrollerData>();
@@ -77,6 +68,15 @@ namespace _Dev.Game.Scripts.UI.Views
             _soldier1 = (Soldier1)UnitFactory.Create<Soldier1>();
             _soldier2 = (Soldier2)UnitFactory.Create<Soldier2>();
             _soldier3 = (Soldier3)UnitFactory.Create<Soldier3>();
+        }
+
+        private void AddItemsInMenu()
+        {
+            SetItemDataAndAdd(_barrack, () => PlacingManager.Instance.SetBuildingForPlacing(BuildingFactory.Create<Barrack>()));
+            SetItemDataAndAdd(_powerPlant, () => PlacingManager.Instance.SetBuildingForPlacing(BuildingFactory.Create<PowerPlant>()));
+            SetItemDataAndAdd(_soldier1, () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier1>()));
+            SetItemDataAndAdd(_soldier2, () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier2>()));
+            SetItemDataAndAdd(_soldier3, () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier3>()));
         }
         
         private void SetItemDataAndAdd(BoardProduct boardProduct, Action onClick)

@@ -13,6 +13,7 @@ namespace _Dev.Game.Scripts.Managers
     public class PlacingManager : Singleton<PlacingManager>
     {
         private readonly List<Cell> _cellsToPlace = new List<Cell>();
+        private readonly List<Barrack> _barracks = new List<Barrack>();
         
         private Building _buildingToPlace;
         private Unit _unitToPlace;
@@ -28,6 +29,8 @@ namespace _Dev.Game.Scripts.Managers
         {
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnLeftClick);
             EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
+            
+            _barracks.ForEach(b => b.CleanUp());
         }
 
         private void OnCursorDirectionChanged(EventArgs obj)
@@ -38,6 +41,9 @@ namespace _Dev.Game.Scripts.Managers
         public void SetBuildingForPlacing(Building building)
         {
             _buildingToPlace = building;
+            
+            if (_buildingToPlace is Barrack barrack)
+                _barracks.Add(barrack);
         }
         
         public void SetUnitForPlacing(Unit unit)

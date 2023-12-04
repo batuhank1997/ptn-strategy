@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e149fd31cd6d4815a3ce317ace48b7b9, type: 3}
-  m_Name: Soldier1
+  m_Script: {fileID: 11500000, guid: f2b5d4d00cf54af3bb1f12e7dc704e45, type: 3}
+  m_Name: Barrack
   m_EditorClassIdentifier: 
-  Name: Soldier1
-  Size: {x: 1, y: 1}
+  Name: Barrack
+  Size: {x: 4, y: 4}
+  HealthLimit: 100
+  Icon: {fileID: 21300000, guid: 814ebdb1c623f6d4f94a03ce9486c691, type: 3}

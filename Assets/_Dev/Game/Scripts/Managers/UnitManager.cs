@@ -52,6 +52,9 @@ namespace _Dev.Game.Scripts.Managers
             var args = (Vector2Arguments) obj;
             
             var targetCell = GridManager.Instance.GetCell(args.Value);
+
+            if (_unitsCell == targetCell) return;
+            
             var targetBuilding = targetCell.GetBuilding();
             var targetUnits = targetCell.GetUnits();
 

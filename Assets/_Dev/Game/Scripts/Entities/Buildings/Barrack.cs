@@ -30,13 +30,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         {
             EventSystemManager.RemoveListener(EventId.on_production_product_clicked, OnProducableProductClick);
         }
-        
-        public void OnProducableProductClick(EventArgs obj)
-        {
-            var args = (TypeArguments) obj;
-            var spawnCell = GridManager.Instance.GetCell(SpawnPosition);
-            Produce(spawnCell, args.Type);
-        }
 
         public void Produce(Cell spawnCell, Type type)
         {
@@ -57,11 +50,18 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             }
         }
         
+        private void OnProducableProductClick(EventArgs obj)
+        {
+            var args = (TypeArguments) obj;
+            var spawnCell = GridManager.Instance.GetCell(SpawnPosition);
+            Produce(spawnCell, args.Type);
+        }
+        
         public override ProductData GetProductData()
         {
             return new ProductData
             {
-                Icon = ImageContainer.Instance.BarracksIcon,
+                Icon = _productSo.Icon,
                 Name = _productSo.Name,
                 Producer = this,
                 BoardProduct = this

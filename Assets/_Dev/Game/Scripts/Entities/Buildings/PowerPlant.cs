@@ -8,7 +8,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         {
             return new ProductData
             {
-                Icon = ImageContainer.Instance.PowerPlantIcon,
+                Icon = _productSo.Icon,
                 Name = _productSo.Name,
                 Producer = null,
                 BoardProduct = this
