@@ -18,6 +18,11 @@ namespace _Dev.Game.Scripts.Entities.Units
             _health = new Health(_productSo.HealthLimit);
         }
         
+        public ProductSo GetSoData()
+        {
+            return _productSo;
+        }
+        
         public Vector2 GetSize()
         {
             return _productSo.Size;

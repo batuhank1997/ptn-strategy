@@ -83,8 +83,7 @@ namespace _Dev.Game.Scripts.UI.Views
         {
             _data.Add(new ScrollerData()
             {
-                ProductName = boardProduct.GetProductData().Name,
-                ProductImage = boardProduct.GetProductData().Icon,
+                ProductSo = boardProduct.GetSoData(),
                 OnClick = onClick
             });
         }

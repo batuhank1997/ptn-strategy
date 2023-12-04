@@ -1,12 +1,11 @@
 ﻿using System;
-using UnityEngine;
+using _Dev.Game.Scripts.Entities.Buildings;
 
 namespace _Dev.Game.Scripts.UI
 {
     public class ScrollerData
     {
-        public string ProductName;
-        public Sprite ProductImage;
+        public ProductSo ProductSo;
         public Action OnClick;
     }
 }
