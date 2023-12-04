@@ -65,57 +65,62 @@ namespace _Dev.Game.Scripts.Managers
         
         public void SetPlacableCellVisualsIfPlacing(Cell cellUnderCursor)
         {
-            //todo: refactor
+            PlacableCellsForBuilding(cellUnderCursor);
+            PlacableCellsForUnit(cellUnderCursor);
+        }
+
+        private void PlacableCellsForBuilding(Cell cellUnderCursor)
+        {
+            if (_buildingToPlace == null) return;
             
-            if (_buildingToPlace != null)
+            var x = _buildingToPlace.Size.x;
+            var y = _buildingToPlace.Size.y;
+
+            for (var i = 0; i < x; i++)
             {
-                var size = _buildingToPlace.Size;
-
-                for (var i = 0; i < size.x; i++)
+                for (var j = 0; j < y; j++)
                 {
-                    for (var j = 0; j < size.y; j++)
-                    {
-                        var offset = new Vector2(i, j);
-                        var coordinates = cellUnderCursor.GetCoordinates() + offset;
+                    var offset = new Vector2(i, j);
+                    var coordinates = cellUnderCursor.GetCoordinates() + offset;
                     
-                        if (GridManager.Instance.IsOutsideOfGameBoard(coordinates))
-                            continue;
+                    if (GridManager.Instance.IsOutsideOfGameBoard(coordinates))
+                        continue;
                     
-                        var cell = GridManager.Instance.GetCell(coordinates);
-                        _cellsToPlace.Add(cell);
-                        cell.SetCellVisual(CellState.ReadyForPlacement);
-                    }
-                }
-
-                var isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied);
-            
-                if (isOccupied || _cellsToPlace.Count < size.x * size.y)
-                {
-                    _canPlaceBuilding = false;
-                    _cellsToPlace.ForEach(cell => cell.SetCellVisual(CellState.InvalidForPlacement));
-                }
-                else
-                {
-                    _canPlaceBuilding = true;
+                    var cell = GridManager.Instance.GetCell(coordinates);
+                    _cellsToPlace.Add(cell);
+                    cell.SetCellVisual(CellState.ReadyForPlacement);
                 }
             }
-            
-            else if (_unitToPlace != null)
-            {
-                var coordinates = cellUnderCursor.GetCoordinates();
 
-                if (GridManager.Instance.IsOutsideOfGameBoard(coordinates) || cellUnderCursor.IsOccupied)
-                {
-                    _canPlaceBuilding = false;
-                    return;
-                }
-                    
-                var cell = GridManager.Instance.GetCell(coordinates);
-                _cellsToPlace.Add(cell);
-                cell.SetCellVisual(CellState.ReadyForPlacement);
-                
+            //todo: maybe refactor
+            var isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied);
+            
+            if (isOccupied || _cellsToPlace.Count < x * y)
+            {
+                _canPlaceBuilding = false;
+                _cellsToPlace.ForEach(cell => cell.SetCellVisual(CellState.InvalidForPlacement));
+            }
+            else
                 _canPlaceBuilding = true;
+        }
+        
+        private void PlacableCellsForUnit(Cell cellUnderCursor)
+        {
+            if (_unitToPlace == null) return;
+            
+            var coordinates = cellUnderCursor.GetCoordinates();
+
+            if (GridManager.Instance.IsOutsideOfGameBoard(coordinates) || cellUnderCursor.IsOccupied)
+            {
+                _canPlaceBuilding = false;
+                return;
             }
+                    
+            var cell = GridManager.Instance.GetCell(coordinates);
+            _cellsToPlace.Add(cell);
+            cell.SetCellVisual(CellState.ReadyForPlacement);
+                
+            _canPlaceBuilding = true;
         }
     }
 }
