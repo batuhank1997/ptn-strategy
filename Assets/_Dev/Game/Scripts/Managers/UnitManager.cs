@@ -54,7 +54,7 @@ namespace _Dev.Game.Scripts.Managers
             var targetUnits = targetCell.GetUnits();
 
             if (targetBuilding != null)
-                _unitAttacks = Attack(targetBuilding.GetProductData().Product);
+                _unitAttacks = Attack(targetBuilding.GetProductData().BoardProduct);
             else if (targetUnits.Count > 0)
                 _unitAttacks = Attack(targetUnits.First());
             else
@@ -66,7 +66,7 @@ namespace _Dev.Game.Scripts.Managers
             StartCoroutine(StartUnitMovementRoutine(_unitsCell, targetCell));
         }
 
-        private UnitAttack Attack(IProduct target)
+        private UnitAttack Attack(BoardProduct target)
         {
             Debug.Log($"attack");
             
@@ -75,7 +75,7 @@ namespace _Dev.Game.Scripts.Managers
                 ((Soldier)unit).DamageDealer.DealDamage(target);
             });
             
-            Debug.Log(target.Health);
+            Debug.Log(target.GetHealth());
             
             _unitAttacks = null;
 

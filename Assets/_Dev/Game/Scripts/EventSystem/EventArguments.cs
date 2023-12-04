@@ -90,11 +90,11 @@ namespace _Dev.Game.Scripts.EventSystem
 
     public class ProductArgs : EventArgs
     {
-        public IProduct Product;
+        public BoardProduct BoardProduct;
 
-        public ProductArgs(IProduct product)
+        public ProductArgs(BoardProduct boardProduct)
         {
-            Product = product;
+            BoardProduct = boardProduct;
         }
     }
 }

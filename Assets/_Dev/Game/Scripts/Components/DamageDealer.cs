@@ -12,14 +12,14 @@ namespace _Dev.Game.Scripts.Components
             _damage = damageAmount;
         }
         
-        public void DealDamage(IProduct target)
+        public void DealDamage(BoardProduct target)
         {
-            target.Health.Damage(_damage);
+            target.GetHealth().Damage(_damage);
             
-            if (target.Health.GetValue() <= 0)
+            if (target.GetHealth().GetValue() <= 0)
                 target.Die();
 
-            Debug.Log($"target: {target.GetProductData().Name} health: {target.Health.GetValue()}");
+            Debug.Log($"target: {target.GetProductData().Name} health: {target.GetHealth().GetValue()}");
         }
     }
 }

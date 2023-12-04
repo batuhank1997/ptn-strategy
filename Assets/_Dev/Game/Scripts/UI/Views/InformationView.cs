@@ -114,7 +114,7 @@ namespace _Dev.Game.Scripts.UI.Views
         {
             m_icon.sprite = info.Icon;
             m_nameText.text = info.Name;
-            m_healthText.text = $"Health: {info.Product.Health.GetValue()}";
+            m_healthText.text = $"Health: {info.BoardProduct.GetHealth().GetValue()}";
             
             foreach (var element in _productionElements)
                 Destroy(element);

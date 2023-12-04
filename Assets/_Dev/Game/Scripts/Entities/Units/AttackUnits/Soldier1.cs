@@ -16,7 +16,7 @@ namespace _Dev.Game.Scripts.Entities.Units.AttackUnits
                 Icon = ImageContainer.Instance.Soldier1Icon,
                 Name = "Soldier 1",
                 Producer = null,
-                Product = this
+                BoardProduct = this
             };
         }
     }

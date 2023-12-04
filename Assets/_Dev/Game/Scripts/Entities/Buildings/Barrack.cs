@@ -16,7 +16,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         public Barrack()
         {
             //todo: refactor this
-            _buildingSo = Resources.Load<BuildingSo>("Buildings/Barrack");
             EventSystemManager.AddListener(EventId.on_production_product_clicked, OnProducableProductClick);
             
             ProducableProducts = new List<ProductData>
@@ -60,12 +59,13 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         
         public override ProductData GetProductData()
         {
+            Debug.Log($"Product data for {_productSo.Name} requested");
             return new ProductData
             {
                 Icon = ImageContainer.Instance.BarracksIcon,
-                Name = _buildingSo.Name,
+                Name = _productSo.Name,
                 Producer = this,
-                Product = this
+                BoardProduct = this
             };
         }
     }

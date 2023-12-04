@@ -6,17 +6,14 @@ using UnityEngine;
 
 namespace _Dev.Game.Scripts.Entities.Buildings
 {
-    public abstract class Building : IProduct
+    public abstract class Building : BoardProduct
     {
         protected Building()
         {
             Health = new Health();
         }
         
-        protected BuildingSo _buildingSo;
-        public Vector2 Size => _buildingSo.Size;
         public Health Health { get; set; }
-        public abstract ProductData GetProductData();
         public void Die()
         {
             EventSystemManager.InvokeEvent(EventId.on_product_die, new ProductArgs(this));

@@ -55,8 +55,8 @@ namespace _Dev.Game.Scripts.Managers
         {
             if (_buildingToPlace == null) return;
             
-            var x = _buildingToPlace.Size.x;
-            var y = _buildingToPlace.Size.y;
+            var x = _buildingToPlace.GetSize().x;
+            var y = _buildingToPlace.GetSize().y;
 
             for (var i = 0; i < x; i++)
             {

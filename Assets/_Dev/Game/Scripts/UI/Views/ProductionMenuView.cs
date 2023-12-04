@@ -79,12 +79,12 @@ namespace _Dev.Game.Scripts.UI.Views
             _soldier3 = (Soldier3)UnitFactory.Create<Soldier3>();
         }
         
-        private void SetItemDataAndAdd(IProduct product, Action onClick)
+        private void SetItemDataAndAdd(BoardProduct boardProduct, Action onClick)
         {
             _data.Add(new ScrollerData()
             {
-                ProductName = product.GetProductData().Name,
-                ProductImage = product.GetProductData().Icon,
+                ProductName = boardProduct.GetProductData().Name,
+                ProductImage = boardProduct.GetProductData().Icon,
                 OnClick = onClick
             });
         }

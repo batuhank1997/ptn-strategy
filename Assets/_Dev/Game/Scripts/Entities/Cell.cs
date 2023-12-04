@@ -166,10 +166,10 @@ namespace _Dev.Game.Scripts.Entities
 
             var args = (ProductArgs)obj;
 
-            if (args.Product == _building)
+            if (args.BoardProduct == _building)
                 ResetCell();
-            else if(_units.Count > 0 && _units.Contains((args.Product as Unit)))
-                RemoveUnit((args.Product as Unit));
+            else if(_units.Count > 0 && _units.Contains((args.BoardProduct as Unit)))
+                RemoveUnit((args.BoardProduct as Unit));
         }
 
         private void SetCellSpriteAlpha(float a)
