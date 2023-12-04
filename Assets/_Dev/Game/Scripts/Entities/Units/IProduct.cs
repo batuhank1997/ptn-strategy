@@ -7,6 +7,7 @@ namespace _Dev.Game.Scripts.Entities.Units
     public interface IProduct
     {
         public Health Health { get; }
+        ProductData GetProductData();
     }
 
     public class ProductData
