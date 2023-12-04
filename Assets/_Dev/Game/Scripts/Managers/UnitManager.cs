@@ -47,6 +47,8 @@ namespace _Dev.Game.Scripts.Managers
         
         private void OnRightClick(EventArgs obj)
         {
+            if (_unitsCell == null || _units.Count == 0) return;
+
             var args = (Vector2Arguments) obj;
             
             var targetCell = GridManager.Instance.GetCell(args.Value);

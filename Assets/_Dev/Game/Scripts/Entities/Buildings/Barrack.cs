@@ -59,7 +59,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         
         public override ProductData GetProductData()
         {
-            Debug.Log($"Product data for {_productSo.Name} requested");
             return new ProductData
             {
                 Icon = ImageContainer.Instance.BarracksIcon,
