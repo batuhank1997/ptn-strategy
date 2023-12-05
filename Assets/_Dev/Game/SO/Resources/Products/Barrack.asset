@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Barrack
   Size: {x: 4, y: 4}
   HealthLimit: 100
-  Icon: {fileID: 21300000, guid: 814ebdb1c623f6d4f94a03ce9486c691, type: 3}
+  Icon: {fileID: 1484213463, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}

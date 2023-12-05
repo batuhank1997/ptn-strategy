@@ -391,13 +391,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beec141b5c0148468fe1bf397167b534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isDebug: 1
   m_spriteRenderer: {fileID: 6782744129345063749}
   m_countText: {fileID: 97748468102162271}
   m_debugText: {fileID: 6640840193410701890}
-  m_emptySprite: {fileID: 21300000, guid: 80dc27a5146d9de45874e87ed60119ad, type: 3}
-  m_validPlacementSprite: {fileID: 21300000, guid: 4522b31fa3b641a4e8643b12a77dd0da, type: 3}
-  m_invalidPlacementSprite: {fileID: 21300000, guid: d88f513fea49dcb46991950796ac7278, type: 3}
+  m_emptySprite: {fileID: 1171601447, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
+  m_validPlacementSprite: {fileID: 937768967, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
+  m_invalidPlacementSprite: {fileID: 1205389442, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
 --- !u!1 &6782744129345063771
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,8 +423,8 @@ Transform:
   m_GameObject: {fileID: 6782744129345063771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6782744127844871161}
   m_RootOrder: 0
@@ -471,7 +470,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 80dc27a5146d9de45874e87ed60119ad, type: 3}
+  m_Sprite: {fileID: 1171601447, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

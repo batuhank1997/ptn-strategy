@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Soldier2
   Size: {x: 1, y: 1}
   HealthLimit: 10
-  Icon: {fileID: 21300000, guid: 854b51813b9c45e409d689548a25d93c, type: 3}
+  Icon: {fileID: 2111002585, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
   DamageAmount: 5
