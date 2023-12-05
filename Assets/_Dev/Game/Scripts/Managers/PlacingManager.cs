@@ -119,7 +119,7 @@ namespace _Dev.Game.Scripts.Managers
                 _buildingToPlace.SetStartingPosition(_cellsToPlace[0].GetCoordinates());
 
                 if (_buildingToPlace is IProducer producer)
-                    producer.SetSpawnCell();
+                    producer.SetSpawnableArea();
 
                 _buildingToPlace = null;
                 _cellsToPlace.Clear();

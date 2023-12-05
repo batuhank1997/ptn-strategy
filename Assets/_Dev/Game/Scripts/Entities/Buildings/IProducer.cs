@@ -9,6 +9,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
         void Produce(Type type);
         List<ProductData> ProducableProducts { get; }
         Vector2 GetSpawnPosition();
-        void SetSpawnCell();
+        void SetSpawnableArea();
     }
 }

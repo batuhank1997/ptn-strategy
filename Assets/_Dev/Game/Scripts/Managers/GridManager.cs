@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities;
+using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
 
@@ -39,6 +40,28 @@ namespace _Dev.Game.Scripts.Managers
         public bool IsOutsideOfGameBoard(Vector2 coordinates)
         {
             return coordinates.x >= m_gridSize.x || coordinates.y >= m_gridSize.y || coordinates.x < 0 || coordinates.y < 0;
+        }
+        
+        public List<Cell> GetNeighboringCells(Vector2 startingCell, Vector2 size)
+        {
+            var neighbors = new List<Cell>();
+
+            var startingX = (int)startingCell.x;
+            var startingY = (int)startingCell.y;
+
+            for (var i = 0; i < size.y; i++)
+                neighbors.Add(GetCell(new Vector2(startingX - 1, startingY + i)));
+            
+            for (var i = 0; i < size.y; i++)
+                neighbors.Add(GetCell(new Vector2(startingX + size.x, startingY + i)));
+            
+            for (var i = 0; i < size.x; i++)
+                neighbors.Add(GetCell(new Vector2(startingX + i, startingY + size.y)));
+            
+            for (var i = 0; i < size.x; i++)
+                neighbors.Add(GetCell(new Vector2(startingX + i, startingY - 1)));
+
+            return neighbors;
         }
         
         private void CreateGameBoard()

@@ -41,9 +41,15 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             return _startingPosition + Vector2.left;
         }
 
-        public void SetSpawnCell()
+        public void SetSpawnableArea()
         {
-            GridManager.Instance.GetCell(GetSpawnPosition()).OccupyForSpawning();
+            var neighbors = GridManager.Instance.GetNeighboringCells(_startingPosition, GetSize());
+            
+            neighbors.ForEach(n =>
+            {
+                Debug.Log(n.name);
+                n.OccupyForSpawning();
+            });
         }
 
         public override ProductData GetProductData()
