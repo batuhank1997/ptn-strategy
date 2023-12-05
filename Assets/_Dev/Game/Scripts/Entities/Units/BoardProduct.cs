@@ -32,9 +32,9 @@ namespace _Dev.Game.Scripts.Entities.Units
             return _productSo.Size;
         }
 
-        public List<Cell> GetCells()
+        public List<Vector2> GetCellPositions()
         {
-            var cells = new List<Cell>();
+            var cells = new List<Vector2>();
             
             var xSize = _productSo.Size.x;
             var ySize = _productSo.Size.y;
@@ -43,7 +43,7 @@ namespace _Dev.Game.Scripts.Entities.Units
             {
                 for (var y = 0; y < ySize; y++)
                 {
-                    var cell = GridManager.Instance.GetCell(_startingPosition + new Vector2(x, y));
+                    var cell = _startingPosition + new Vector2(x, y);
                     cells.Add(cell);
                 }
             }

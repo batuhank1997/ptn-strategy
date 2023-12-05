@@ -98,10 +98,13 @@ namespace _Dev.Game.Scripts.Managers
             var sprite = units.First().GetProductData().Icon;
             
             _unitsCell.ResetCell();
+            
+            var firstCell = path.First();
+            var lastCell = path.Last();
 
             foreach (var cell in path)
             {
-                if (cell == path.Last() || cell == path.First())
+                if (cell == firstCell || cell == lastCell)
                     continue;
 
                 cell.PlayMovingAnimation(sprite);

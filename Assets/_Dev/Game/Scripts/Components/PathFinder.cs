@@ -27,11 +27,18 @@ namespace _Dev.Game.Scripts.Components
 
             if (_cells.ContainsKey(targetPosition) && _cells[targetPosition].IsOccupied)
             {
-                var cell = FindClosestUnoccupiedCell(targetPosition, startPosition)
+                var unitCell = _cells[startPosition];
+                var targetCell = _cells[targetPosition];
+                
+                var closestPosition = FindClosestPosition(targetCell.GetBuilding().GetCellPositions(), unitCell.GetCoordinates());
+
+                targetPosition = GetNeighbors(closestPosition).FirstOrDefault(v2 => !_cells[v2].IsOccupied);
+                
+                /*var cell = FindClosestUnoccupiedCell(targetPosition, startPosition)
                     .FirstOrDefault(cell => !cell.IsOccupied);
 
                 if (cell != null)
-                    targetPosition = cell.GetCoordinates();
+                    targetPosition = cell.GetCoordinates();*/
                 
                 Debug.Log($"[PATHFINDER] Target cell is occupied, closest unoccupied cell is {targetPosition}");
             }
@@ -178,6 +185,26 @@ namespace _Dev.Game.Scripts.Components
             }
 
             return null;
+        }
+
+        private static Vector2 FindClosestPosition(List<Vector2> positions, Vector2 target)
+        {
+            if (positions == null || positions.Count == 0)
+                return Vector2.zero;
+
+            var minDistance = float.MaxValue;
+            var closestPosition = positions[0];
+
+            foreach (var position in positions)
+            {
+                var distance = Vector2.Distance(target, position);
+
+                if (!(distance < minDistance)) continue;
+                minDistance = distance;
+                closestPosition = position;
+            }
+
+            return closestPosition;
         }
     }
 }
