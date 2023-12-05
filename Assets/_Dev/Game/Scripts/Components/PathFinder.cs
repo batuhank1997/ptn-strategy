@@ -33,14 +33,6 @@ namespace _Dev.Game.Scripts.Components
                 var closestPosition = FindClosestPosition(targetCell.GetBuilding().GetCellPositions(), unitCell.GetCoordinates());
 
                 targetPosition = GetNeighbors(closestPosition).FirstOrDefault(v2 => !_cells[v2].IsOccupied);
-                
-                /*var cell = FindClosestUnoccupiedCell(targetPosition, startPosition)
-                    .FirstOrDefault(cell => !cell.IsOccupied);
-
-                if (cell != null)
-                    targetPosition = cell.GetCoordinates();*/
-                
-                Debug.Log($"[PATHFINDER] Target cell is occupied, closest unoccupied cell is {targetPosition}");
             }
 
             while (openSet.Count > 0)
