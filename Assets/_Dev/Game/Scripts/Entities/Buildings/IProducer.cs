@@ -7,7 +7,8 @@ namespace _Dev.Game.Scripts.Entities.Buildings
     public interface IProducer
     {
         void Produce(Type type);
-        List<ProductData> ProducableProducts { get; set; }
+        List<ProductData> ProducableProducts { get; }
         Vector2 GetSpawnPosition();
+        void SetSpawnCell();
     }
 }

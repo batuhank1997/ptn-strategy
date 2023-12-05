@@ -41,6 +41,11 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             return _startingPosition + Vector2.left;
         }
 
+        public void SetSpawnCell()
+        {
+            GridManager.Instance.GetCell(GetSpawnPosition()).OccupyForSpawning();
+        }
+
         public override ProductData GetProductData()
         {
             return new ProductData

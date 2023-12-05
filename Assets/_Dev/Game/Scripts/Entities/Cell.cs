@@ -19,6 +19,7 @@ namespace _Dev.Game.Scripts.Entities
         [SerializeField] private Sprite m_invalidPlacementSprite;
         
         public bool IsOccupied => _units.Count != 0 || _building != null;
+        public bool IsSpawnCell;
 
         private readonly List<Unit> _units = new List<Unit>();
         private Building _building;
@@ -48,6 +49,11 @@ namespace _Dev.Game.Scripts.Entities
         {
             EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
             EventSystemManager.RemoveListener(EventId.on_product_die, OnProductDie);
+        }
+        
+        public void OccupyForSpawning()
+        {
+            IsSpawnCell = true;
         }
 
         public void PlaceBuilding(Building buildingToPlace)

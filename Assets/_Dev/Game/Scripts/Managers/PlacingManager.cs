@@ -14,7 +14,7 @@ namespace _Dev.Game.Scripts.Managers
     {
         private readonly List<Cell> _cellsToPlace = new List<Cell>();
         private readonly List<Barrack> _barracks = new List<Barrack>();
-        
+
         private Building _buildingToPlace;
         private Unit _unitToPlace;
         private bool _canPlaceBuilding;
@@ -29,7 +29,7 @@ namespace _Dev.Game.Scripts.Managers
         {
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnLeftClick);
             EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
-            
+
             _barracks.ForEach(b => b.CleanUp());
         }
 
@@ -37,20 +37,20 @@ namespace _Dev.Game.Scripts.Managers
         {
             _cellsToPlace.Clear();
         }
-        
+
         public void SetBuildingForPlacing(Building building)
         {
             _buildingToPlace = building;
-            
+
             if (_buildingToPlace is Barrack barrack)
                 _barracks.Add(barrack);
         }
-        
+
         public void SetUnitForPlacing(Unit unit)
         {
             _unitToPlace = unit;
         }
-        
+
         public void SetPlacableCellVisualsIfPlacing(Cell cellUnderCursor)
         {
             PlacableCellsForBuilding(cellUnderCursor);
@@ -60,7 +60,7 @@ namespace _Dev.Game.Scripts.Managers
         private void PlacableCellsForBuilding(Cell cellUnderCursor)
         {
             if (_buildingToPlace == null) return;
-            
+
             var x = _buildingToPlace.GetSize().x;
             var y = _buildingToPlace.GetSize().y;
 
@@ -70,19 +70,19 @@ namespace _Dev.Game.Scripts.Managers
                 {
                     var offset = new Vector2(i, j);
                     var coordinates = cellUnderCursor.GetCoordinates() + offset;
-                    
+
                     if (GridManager.Instance.IsOutsideOfGameBoard(coordinates))
                         continue;
-                    
+
                     var cell = GridManager.Instance.GetCell(coordinates);
                     _cellsToPlace.Add(cell);
                     cell.SetCellVisual(CellState.ReadyForPlacement);
                 }
             }
 
-            //todo: maybe refactor
-            var isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied);
-            
+            //todo: maybe refactor later
+            var isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied || cell.IsSpawnCell);
+
             if (isOccupied || _cellsToPlace.Count < x * y)
             {
                 _canPlaceBuilding = false;
@@ -91,11 +91,11 @@ namespace _Dev.Game.Scripts.Managers
             else
                 _canPlaceBuilding = true;
         }
-        
+
         private void PlacableCellsForUnit(Cell cellUnderCursor)
         {
             if (_unitToPlace == null) return;
-            
+
             var coordinates = cellUnderCursor.GetCoordinates();
 
             if (GridManager.Instance.IsOutsideOfGameBoard(coordinates) || cellUnderCursor.IsOccupied)
@@ -103,20 +103,24 @@ namespace _Dev.Game.Scripts.Managers
                 _canPlaceBuilding = false;
                 return;
             }
-                    
+
             var cell = GridManager.Instance.GetCell(coordinates);
             _cellsToPlace.Add(cell);
             cell.SetCellVisual(CellState.ReadyForPlacement);
-                
+
             _canPlaceBuilding = true;
         }
-        
+
         private void OnLeftClick(EventArgs obj)
         {
             if (_buildingToPlace != null && _canPlaceBuilding)
             {
                 _cellsToPlace.ForEach(c => c.PlaceBuilding(_buildingToPlace));
                 _buildingToPlace.SetStartingPosition(_cellsToPlace[0].GetCoordinates());
+
+                if (_buildingToPlace is IProducer producer)
+                    producer.SetSpawnCell();
+
                 _buildingToPlace = null;
                 _cellsToPlace.Clear();
             }

@@ -394,9 +394,10 @@ MonoBehaviour:
   m_spriteRenderer: {fileID: 6782744129345063749}
   m_countText: {fileID: 97748468102162271}
   m_debugText: {fileID: 6640840193410701890}
-  m_emptySprite: {fileID: 1171601447, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
-  m_validPlacementSprite: {fileID: 937768967, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
-  m_invalidPlacementSprite: {fileID: 1205389442, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
+  m_emptySprite: {fileID: 1575759570, guid: f5dad06f79f165f41aa9f9b3c0480c71, type: 3}
+  m_validPlacementSprite: {fileID: -1610624192, guid: f5dad06f79f165f41aa9f9b3c0480c71, type: 3}
+  m_invalidPlacementSprite: {fileID: 704204653, guid: f5dad06f79f165f41aa9f9b3c0480c71, type: 3}
+  IsSpawnCell: 0
 --- !u!1 &6782744129345063771
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +424,7 @@ Transform:
   m_GameObject: {fileID: 6782744129345063771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6782744127844871161}
@@ -470,7 +471,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1171601447, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
+  m_Sprite: {fileID: 1575759570, guid: f5dad06f79f165f41aa9f9b3c0480c71, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

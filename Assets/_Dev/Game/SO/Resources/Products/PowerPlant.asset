@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Power Plant
   Size: {x: 2, y: 3}
   HealthLimit: 50
-  Icon: {fileID: 1963789560, guid: 5c39c60a7b4d4ab428e0ee0a46ca76b3, type: 3}
+  Icon: {fileID: -1629618601, guid: f5dad06f79f165f41aa9f9b3c0480c71, type: 3}
