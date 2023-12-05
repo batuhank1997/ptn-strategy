@@ -5,23 +5,19 @@ namespace _Dev.Game.Scripts.Managers
 {
     public class CameraManager : Singleton<CameraManager>
     {
-        private Vector2 _resolution;
         private Camera _mainCamera;
+        
+        private const int BASE_SIZE = 5;
+        private const float BASE_ASPECT_RATIO = 1.6f;
         
         public void Initilize()
         {
             _mainCamera = Camera.main;
-            _resolution = new Vector2(Screen.width, Screen.height);
         }
-        
-        public Vector2 GetResolution()
+
+        private void SetCameraSize(float targetAspectRatio)
         {
-            return _resolution;
-        }
-        
-        public Vector2 GetLeftCornerCoordinates()
-        {
-            return _mainCamera.ViewportToWorldPoint(new Vector2(0,1));   
+            _mainCamera.orthographicSize = BASE_SIZE * (targetAspectRatio / BASE_ASPECT_RATIO);
         }
     }
 }
