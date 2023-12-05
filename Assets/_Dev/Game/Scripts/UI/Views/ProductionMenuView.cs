@@ -67,11 +67,16 @@ namespace _Dev.Game.Scripts.UI.Views
 
         private void AddItemsInMenu()
         {
-            SetItemDataAndAdd(_barrack, () => PlacingManager.Instance.SetBuildingForPlacing(BuildingFactory.Create<Barrack>()));
-            SetItemDataAndAdd(_powerPlant, () => PlacingManager.Instance.SetBuildingForPlacing(BuildingFactory.Create<PowerPlant>()));
-            SetItemDataAndAdd(_soldier1, () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier1>()));
-            SetItemDataAndAdd(_soldier2, () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier2>()));
-            SetItemDataAndAdd(_soldier3, () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier3>()));
+            SetItemDataAndAdd(_barrack, 
+                () => PlacingManager.Instance.SetBuildingForPlacing(BuildingFactory.Create<Barrack>()));
+            SetItemDataAndAdd(_powerPlant, 
+                () => PlacingManager.Instance.SetBuildingForPlacing(BuildingFactory.Create<PowerPlant>()));
+            SetItemDataAndAdd(_soldier1, 
+                () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier1>()));
+            SetItemDataAndAdd(_soldier2, 
+                () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier2>()));
+            SetItemDataAndAdd(_soldier3, 
+                () => PlacingManager.Instance.SetUnitForPlacing(UnitFactory.Create<Soldier3>()));
         }
         
         private void SetItemDataAndAdd(BoardProduct boardProduct, Action onClick)

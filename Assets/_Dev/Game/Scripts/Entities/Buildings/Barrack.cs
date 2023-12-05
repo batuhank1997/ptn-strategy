@@ -31,30 +31,25 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             EventSystemManager.RemoveListener(EventId.on_production_product_clicked, OnProducableProductClick);
         }
 
-        public void Produce(Cell spawnCell, Type type)
+        public void Produce(Type type)
         {
-            if (type == typeof(Soldier1))
-            {
-                var soldier = UnitFactory.Create<Soldier1>();
-                spawnCell.PlaceUnits(new List<Unit> {soldier});
-            }
-            else if (type == typeof(Soldier2))
-            {
-                var soldier = UnitFactory.Create<Soldier2>();
-                spawnCell.PlaceUnits(new List<Unit> {soldier});
-            }
-            else if (type == typeof(Soldier3))
-            {
-                var soldier = UnitFactory.Create<Soldier3>();
-                spawnCell.PlaceUnits(new List<Unit> {soldier});
-            }
+            var spawnCell = GridManager.Instance.GetCell(SpawnPosition);
+
+            if (!typeof(Unit).IsAssignableFrom(type)) return;
+            
+            var soldier = (Unit)Activator.CreateInstance(type);
+            spawnCell.PlaceUnits(new List<Unit> { soldier });
         }
         
         private void OnProducableProductClick(EventArgs obj)
         {
-            var args = (TypeArguments) obj;
-            var spawnCell = GridManager.Instance.GetCell(SpawnPosition);
-            Produce(spawnCell, args.Type);
+            var args = (ProductArgs) obj;
+            
+            if (args.BoardProduct.GetProductData().Producer != this)
+                return;
+
+            var type = args.BoardProduct.GetProductData().GetType();
+            Produce(type);
         }
         
         public override ProductData GetProductData()

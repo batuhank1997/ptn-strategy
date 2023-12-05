@@ -1,5 +1,4 @@
-﻿using System;
-using _Dev.Game.Scripts.Entities;
+﻿using _Dev.Game.Scripts.Entities;
 using _Dev.Game.Scripts.EventSystem;
 using _Dev.Utilities.Singleton;
 using UnityEngine;
@@ -59,7 +58,6 @@ namespace _Dev.Game.Scripts.Managers
                 
             var cell = GetCellUnderCursor();
             EventSystemManager.InvokeEvent(EventId.on_grid_left_click, new Vector2Arguments(cell.GetCoordinates()));
-            Debug.Log($"left click on cell: {cell.name}");
         }
         
         private void HandleRightClick()
@@ -71,7 +69,6 @@ namespace _Dev.Game.Scripts.Managers
             
             var cell = GetCellUnderCursor();
             EventSystemManager.InvokeEvent(EventId.on_grid_right_click, new Vector2Arguments(cell.GetCoordinates()));
-            Debug.Log($"right click on cell: {cell.name}");
         }
         
         private Cell GetCellUnderCursor()

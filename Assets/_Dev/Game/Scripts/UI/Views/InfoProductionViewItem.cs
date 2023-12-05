@@ -1,3 +1,4 @@
+using System;
 using EnhancedUI.EnhancedScroller;
 using TMPro;
 using UnityEngine;
@@ -21,8 +22,12 @@ namespace _Dev.Game.Scripts.UI.Views
             m_image.sprite = _scrollerData.ProductSo.Icon;
 
             SetSizeTextIfBigger();
-            
-            m_button.onClick.AddListener(delegate { _scrollerData.OnClick.Invoke(); });
+            m_button.onClick.AddListener(OnClick);
+        }
+        
+        public void OnDisable()
+        {
+            m_button.onClick.RemoveListener(OnClick);
         }
 
         private void SetSizeTextIfBigger()
@@ -35,9 +40,9 @@ namespace _Dev.Game.Scripts.UI.Views
                 m_sizeText.gameObject.SetActive(false);
         }
 
-        private void OnDestroy()
+        private void OnClick()
         {
-            m_button.onClick.RemoveListener(delegate { _scrollerData.OnClick.Invoke(); });
+            _scrollerData.OnClick.Invoke();
         }
     }
 }

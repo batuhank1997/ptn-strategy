@@ -55,7 +55,7 @@ namespace _Dev.Game.Scripts.UI.Views
 
             return cellView;
         }
-
+        
         private void OnCellRightClicked(EventArgs obj)
         {
             ToggleInfoPanel(false);
@@ -75,19 +75,15 @@ namespace _Dev.Game.Scripts.UI.Views
             var args = (Vector2Arguments)obj;
             var cell = GridManager.Instance.GetCell(args.Value);
 
+            _data.Clear();
+            m_scroller.Delegate = this;
+            m_scroller.ReloadData();
+
             if (cell.IsOccupied)
                 DisplayInfo(cell);
             else
-            {
-                _data.Clear();
-                m_scroller.Delegate = this;
-                m_scroller.ReloadData();
                 ToggleInfoPanel(false);
-            }
-
-            if (_data.Count <= 0) return;
             
-            m_scroller.Delegate = this;
             m_scroller.ReloadData();
         }
 
@@ -138,13 +134,8 @@ namespace _Dev.Game.Scripts.UI.Views
         {
             foreach (var productData in producer.ProducableProducts)
             {
-                _data.Add(new ScrollerData()
-                {
-                    ProductSo = productData.BoardProduct.GetSoData(),
-                    
-                    OnClick = ()=> EventSystemManager.InvokeEvent(EventId.on_production_product_clicked, 
-                        new TypeArguments(productData.BoardProduct.GetType()))
-                });
+                SetItemDataAndAdd(productData.BoardProduct, 
+                    ()=> producer.Produce(productData.BoardProduct.GetType()));
             }
         }
 
