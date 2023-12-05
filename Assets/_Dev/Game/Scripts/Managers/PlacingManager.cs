@@ -116,11 +116,8 @@ namespace _Dev.Game.Scripts.Managers
             if (_buildingToPlace != null && _canPlaceBuilding)
             {
                 _cellsToPlace.ForEach(c => c.PlaceBuilding(_buildingToPlace));
-                
-                if (_buildingToPlace is IProducer producer)
-                    producer.SpawnPosition = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0); //todo: refactor
+                _buildingToPlace.SetStartingPosition(_cellsToPlace[0].GetCoordinates());
                 _buildingToPlace = null;
-                
                 _cellsToPlace.Clear();
             }
             else if (_unitToPlace != null && _canPlaceBuilding)
@@ -129,25 +126,6 @@ namespace _Dev.Game.Scripts.Managers
                 cell.PlaceUnits(new List<Unit>(){_unitToPlace});
                 _unitToPlace = null;
             }
-        }
-        
-        private Vector2 GetFirstAvailableSpawnPoint()
-        {
-            var spawnPos = _cellsToPlace[0].GetCoordinates() + new Vector2(-1, 0);
-            var firstPos = spawnPos;
-            var spawnCell = GridManager.Instance.GetCell(spawnPos);
-
-            while (spawnCell.IsOccupied)
-            {
-                if ((spawnPos + Vector2.up).y > firstPos.y)
-                {
-                    
-                }
-                spawnPos += new Vector2(1, 0);
-                spawnCell = GridManager.Instance.GetCell(spawnPos);
-            }
-            
-            return Vector2.zero;
         }
     }
 }

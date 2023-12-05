@@ -8,6 +8,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
     {
         void Produce(Type type);
         List<ProductData> ProducableProducts { get; set; }
-        Vector2 SpawnPosition { get; set; }
+        Vector2 GetSpawnPosition();
     }
 }
