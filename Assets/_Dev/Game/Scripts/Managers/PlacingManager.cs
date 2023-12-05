@@ -123,7 +123,8 @@ namespace _Dev.Game.Scripts.Managers
             else if (_unitToPlace != null && _canPlaceBuilding)
             {
                 var cell = _cellsToPlace[0];
-                cell.PlaceUnits(new List<Unit>(){_unitToPlace});
+                _unitToPlace.SetStartingPosition(cell.GetCoordinates());
+                cell.PlaceUnit(_unitToPlace);
                 _unitToPlace = null;
             }
         }

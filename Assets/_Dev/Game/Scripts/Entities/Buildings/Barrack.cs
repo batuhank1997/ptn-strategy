@@ -32,6 +32,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             if (!typeof(Unit).IsAssignableFrom(type)) return;
             
             var soldier = (Unit)Activator.CreateInstance(type);
+            soldier.SetStartingPosition(spawnCell.GetCoordinates());
             spawnCell.PlaceUnit(soldier);
         }
         

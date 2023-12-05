@@ -11,6 +11,7 @@ namespace _Dev.Game.Scripts.Components
         {
             var target = path.Last();
             target.PlaceUnit(unitToMove);
+            unitToMove.SetStartingPosition(target.GetCoordinates());
         }
     }
 }
