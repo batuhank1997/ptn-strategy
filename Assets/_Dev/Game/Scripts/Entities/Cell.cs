@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using _Dev.Game.Scripts.Entities.Buildings;
 using _Dev.Game.Scripts.Entities.Units;
 using _Dev.Game.Scripts.EventSystem;
+using _Dev.Game.Scripts.Managers;
 using TMPro;
 using UnityEngine;
 
@@ -111,6 +112,8 @@ namespace _Dev.Game.Scripts.Entities
 
         public void ResetCell()
         {
+            _building?.GetNeighbourCells().ForEach(cell => cell.IsSpawnCell = false);
+            
             _building = null;
             _units.Clear();
             m_countText.gameObject.SetActive(false);

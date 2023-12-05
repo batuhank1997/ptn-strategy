@@ -50,6 +50,11 @@ namespace _Dev.Game.Scripts.Entities.Units
 
             return cells;
         }
+
+        public List<Cell> GetNeighbourCells()
+        {
+            return GridManager.Instance.GetNeighboringCells(_startingPosition, GetSize());
+        }
          
         public Health GetHealth()
         {
