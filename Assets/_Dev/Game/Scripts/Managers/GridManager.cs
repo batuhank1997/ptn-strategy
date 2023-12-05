@@ -49,17 +49,16 @@ namespace _Dev.Game.Scripts.Managers
             var startingX = (int)startingCell.x;
             var startingY = (int)startingCell.y;
 
-            for (var i = 0; i < size.y; i++)
-                neighbors.Add(GetCell(new Vector2(startingX - 1, startingY + i)));
-            
-            for (var i = 0; i < size.y; i++)
-                neighbors.Add(GetCell(new Vector2(startingX + size.x, startingY + i)));
-            
-            for (var i = 0; i < size.x; i++)
-                neighbors.Add(GetCell(new Vector2(startingX + i, startingY + size.y)));
-            
-            for (var i = 0; i < size.x; i++)
-                neighbors.Add(GetCell(new Vector2(startingX + i, startingY - 1)));
+            for (var i = startingX - 1; i < startingX + size.x + 1; i++)
+            {
+                for (var j = startingY - 1; j < startingY + size.y + 1; j++)
+                {
+                    var pos = new Vector2(i, j);
+                    
+                    if (!IsOutsideOfGameBoard(pos))
+                        neighbors.Add(GetCell(pos));
+                }
+            }
 
             return neighbors;
         }
