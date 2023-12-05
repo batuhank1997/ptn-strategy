@@ -60,17 +60,23 @@ namespace _Dev.Game.Scripts.Entities
         public void PlaceUnit(Unit unit)
         {
             _units.Add(unit);
-            m_countText.gameObject.SetActive(true);
-            m_countText.text = (_units.Count).ToString();
+            SetCountText();
             SetCellVisual(CellState.HasUnit);
         }
         
         public void PlaceUnits(List<Unit> units)
         {
             _units.AddRange(units);
+            SetCountText();
+            SetCellVisual(CellState.HasUnit);
+        }
+
+        private void SetCountText()
+        {
+            if (_units.Count <= 1) return;
+            
             m_countText.gameObject.SetActive(true);
             m_countText.text = (_units.Count).ToString();
-            SetCellVisual(CellState.HasUnit);
         }
         
         private void RemoveUnit(Unit unit)

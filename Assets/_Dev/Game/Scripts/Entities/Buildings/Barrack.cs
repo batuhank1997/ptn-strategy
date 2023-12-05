@@ -38,7 +38,7 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             if (!typeof(Unit).IsAssignableFrom(type)) return;
             
             var soldier = (Unit)Activator.CreateInstance(type);
-            spawnCell.PlaceUnits(new List<Unit> { soldier });
+            spawnCell.PlaceUnit(soldier);
         }
         
         private void OnProducableProductClick(EventArgs obj)
