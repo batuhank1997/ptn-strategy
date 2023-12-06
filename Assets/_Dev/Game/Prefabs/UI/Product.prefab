@@ -325,7 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellIdentifier: Product
   m_button: {fileID: 7007142569487931486}
-  m_image: {fileID: 7007142570094870129}
+  m_icon: {fileID: 7007142570094870129}
   m_nameText: {fileID: 7007142568970077172}
   m_sizeText: {fileID: 8987834049851476454}
 --- !u!114 &7007142569487931486
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 7007142570094870134}
   - component: {fileID: 7007142570094870129}
   m_Layer: 5
-  m_Name: Image
+  m_Name: icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

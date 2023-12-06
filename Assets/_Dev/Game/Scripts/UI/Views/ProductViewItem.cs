@@ -1,6 +1,7 @@
 using EnhancedUI.EnhancedScroller;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Dev.Game.Scripts.UI.Views
@@ -8,7 +9,7 @@ namespace _Dev.Game.Scripts.UI.Views
     public class ProductViewItem : EnhancedScrollerCellView
     {
         [SerializeField] private Button m_button;
-        [SerializeField] private Image m_image;
+        [SerializeField] private Image m_icon;
         [SerializeField] private TextMeshProUGUI m_nameText;
         [SerializeField] private TextMeshProUGUI m_sizeText;
 
@@ -18,7 +19,7 @@ namespace _Dev.Game.Scripts.UI.Views
         {
             _scrollerData = scrollerData;
             m_nameText.text = _scrollerData.ProductSo.Name;
-            m_image.sprite = _scrollerData.ProductSo.Icon;
+            m_icon.sprite = _scrollerData.ProductSo.Icon;
 
             SetSizeTextIfBigger();
             
