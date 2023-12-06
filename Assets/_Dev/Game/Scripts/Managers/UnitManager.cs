@@ -17,11 +17,10 @@ namespace _Dev.Game.Scripts.Managers
         private List<Unit> _units;
         private Cell _unitsCell;
 
-        private delegate void UnitAttack();
-        private UnitAttack _unitAttacks;
+        private Action _unitAttack;
 
         private readonly WaitForSeconds _delay = new WaitForSeconds(0.1f);
-        
+
         public void Initilize()
         {
             EventSystemManager.AddListener(EventId.on_grid_left_click, OnLeftClick);
@@ -38,32 +37,32 @@ namespace _Dev.Game.Scripts.Managers
 
         private void OnLeftClick(EventArgs obj)
         {
-            var args = (Vector2Arguments) obj;
-            
+            var args = (Vector2Arguments)obj;
+
             var cell = GridManager.Instance.GetCell(args.Value);
             _unitsCell = cell;
             _units = _unitsCell.GetUnits();
         }
-        
+
         private void OnRightClick(EventArgs obj)
         {
             if (_unitsCell == null || _units.Count == 0) return;
 
-            var args = (Vector2Arguments) obj;
-            
+            var args = (Vector2Arguments)obj;
+
             var targetCell = GridManager.Instance.GetCell(args.Value);
 
             if (_unitsCell == targetCell) return;
-            
+
             var targetBuilding = targetCell.GetBuilding();
             var targetUnits = targetCell.GetUnits();
 
             if (targetBuilding != null)
-                _unitAttacks = Attack(targetBuilding.GetProductData().BoardProduct);
+                _unitAttack = ()=> Attack(targetBuilding.GetProductData().BoardProduct);
             else if (targetUnits.Count > 0)
-                _unitAttacks = Attack(targetUnits.First());
+                _unitAttack = ()=> Attack(targetUnits.First());
             else
-                _unitAttacks = null;
+                _unitAttack = null;
 
             if (_units == null || _unitsCell == null)
                 return;
@@ -71,20 +70,10 @@ namespace _Dev.Game.Scripts.Managers
             StartCoroutine(StartUnitMovementRoutine(_unitsCell, targetCell));
         }
 
-        private UnitAttack Attack(BoardProduct target)
+        private void Attack(BoardProduct target)
         {
-            Debug.Log($"attack");
-            
-            _units.ForEach(unit =>
-            {
-                ((Soldier)unit).DamageDealer.DealDamage(target);
-            });
-            
-            Debug.Log(target.GetHealth());
-            
-            _unitAttacks = null;
-
-            return null;
+            _units.ForEach(unit => { ((Soldier)unit).DamageDealer.DealDamage(target); });
+            _unitAttack = null;
         }
 
         private IEnumerator StartUnitMovementRoutine(Cell currentCell, Cell targetCell)
@@ -93,12 +82,12 @@ namespace _Dev.Game.Scripts.Managers
 
             if (path == null)
                 yield break;
-            
+
             var units = new List<Unit>(_units);
             var sprite = units.First().GetProductData().Icon;
-            
+
             _unitsCell.ResetCell();
-            
+
             var firstCell = path.First();
             var lastCell = path.Last();
 
@@ -110,13 +99,11 @@ namespace _Dev.Game.Scripts.Managers
                 cell.PlayMovingAnimation(sprite);
                 yield return _delay;
             }
+
+            _units = units;
+            _unitAttack?.Invoke();
             
-            units.ForEach(unit =>
-            {
-                unit.Mover.MoveToAlongPath(path, unit);
-            });
-            
-            _unitAttacks?.Invoke();
+            units.ForEach(unit => { unit.Mover.MoveToAlongPath(path, unit); });
         }
     }
 }

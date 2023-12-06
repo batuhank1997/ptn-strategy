@@ -47,7 +47,6 @@ namespace _Dev.Game.Scripts.Entities.Buildings
             
             neighbors.ForEach(n =>
             {
-                Debug.Log(n.name);
                 n.OccupyForSpawning();
             });
         }
