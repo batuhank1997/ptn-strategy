@@ -36,6 +36,13 @@ namespace _Dev.Game.Scripts.UI.Views
             ToggleInfoPanel(false);
             base.OnEnable();
         }
+        
+        protected override void OnDisable()
+        {
+            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellLeftClicked);
+            EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellRightClicked);
+            base.OnDisable();
+        }
 
         public int GetNumberOfCells(EnhancedScroller scroller)
         {
@@ -59,13 +66,6 @@ namespace _Dev.Game.Scripts.UI.Views
         private void OnCellRightClicked(EventArgs obj)
         {
             ToggleInfoPanel(false);
-        }
-
-        protected override void OnDisable()
-        {
-            EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnCellLeftClicked);
-            EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnCellRightClicked);
-            base.OnDisable();
         }
 
         private void OnCellLeftClicked(EventArgs obj)

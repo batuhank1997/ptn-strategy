@@ -1,4 +1,5 @@
 ﻿using System;
+using _Dev.Game.Scripts.EventSystem;
 using UnityEngine;
 
 namespace _Dev.Game.Scripts.Managers
@@ -19,6 +20,7 @@ namespace _Dev.Game.Scripts.Managers
                 CameraManager.Instance.Initilize();
                 UnitManager.Instance.Initilize();
                 PlacingManager.Instance.Initilize();
+                EventSystemManager.InvokeEvent(EventId.on_game_initialized);
             }
             catch (Exception e)
             {

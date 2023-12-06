@@ -22,20 +22,17 @@ namespace _Dev.Game.Scripts.Managers
         public void Initilize()
         {
             EventSystemManager.AddListener(EventId.on_grid_left_click, OnLeftClick);
+            EventSystemManager.AddListener(EventId.on_grid_right_click, OnRightClick);
             EventSystemManager.AddListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
         }
 
         private void OnDestroy()
         {
             EventSystemManager.RemoveListener(EventId.on_grid_left_click, OnLeftClick);
+            EventSystemManager.RemoveListener(EventId.on_grid_right_click, OnRightClick);
             EventSystemManager.RemoveListener(EventId.on_cursor_direction_changed, OnCursorDirectionChanged);
 
             _barracks.ForEach(b => b.CleanUp());
-        }
-
-        private void OnCursorDirectionChanged(EventArgs obj)
-        {
-            _cellsToPlace.Clear();
         }
 
         public void SetBuildingForPlacing(Building building)
@@ -146,11 +143,24 @@ namespace _Dev.Game.Scripts.Managers
             }
         }
         
+                
+        private void OnRightClick(EventArgs obj)
+        {
+            if (_buildingToPlace != null || _unitToPlace != null)
+                ResetPlacing();
+        }
+
+        private void OnCursorDirectionChanged(EventArgs obj)
+        {
+            _cellsToPlace.Clear();
+        }
+        
         private void ResetPlacing()
         {
             _buildingToPlace = null;
             _unitToPlace = null;
             _cellsToPlace.Clear();
+            EventSystemManager.InvokeEvent(EventId.on_cursor_direction_changed);
         }
     }
 }
