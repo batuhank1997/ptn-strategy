@@ -48,6 +48,7 @@ namespace _Dev.Game.Scripts.Managers
 
         public void SetUnitForPlacing(Unit unit)
         {
+            ResetPlacing();
             _unitToPlace = unit;
         }
 
@@ -63,7 +64,7 @@ namespace _Dev.Game.Scripts.Managers
 
             var x = _buildingToPlace.GetSize().x;
             var y = _buildingToPlace.GetSize().y;
-
+            
             for (var i = 0; i < x; i++)
             {
                 for (var j = 0; j < y; j++)
@@ -80,8 +81,20 @@ namespace _Dev.Game.Scripts.Managers
                 }
             }
 
-            //todo: maybe refactor later
-            var isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied || cell.IsSpawnCell);
+            SetVisuals(x, y);
+        }
+
+        private void SetVisuals(float x, float y)
+        {
+            bool isOccupied;
+            
+            if (_buildingToPlace is IProducer)
+            {
+                var spawnCell = GridManager.Instance.GetCell(_cellsToPlace[0].GetCoordinates() + Vector2.left);
+                isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied || cell.IsSpawnCell) || spawnCell.IsOccupied;
+            }
+            else
+                isOccupied = _cellsToPlace.Any(cell => cell.IsOccupied || cell.IsSpawnCell);
 
             if (isOccupied || _cellsToPlace.Count < x * y)
             {
@@ -131,6 +144,13 @@ namespace _Dev.Game.Scripts.Managers
                 cell.PlaceUnit(_unitToPlace);
                 _unitToPlace = null;
             }
+        }
+        
+        private void ResetPlacing()
+        {
+            _buildingToPlace = null;
+            _unitToPlace = null;
+            _cellsToPlace.Clear();
         }
     }
 }
