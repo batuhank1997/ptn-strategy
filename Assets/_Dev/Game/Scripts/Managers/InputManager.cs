@@ -57,6 +57,8 @@ namespace _Dev.Game.Scripts.Managers
                 return;
                 
             var cell = GetCellUnderCursor();
+            if (cell == null) return;
+            
             EventSystemManager.InvokeEvent(EventId.on_grid_left_click, new Vector2Arguments(cell.GetCoordinates()));
         }
         

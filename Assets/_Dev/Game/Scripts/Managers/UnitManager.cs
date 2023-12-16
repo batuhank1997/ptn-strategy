@@ -104,6 +104,8 @@ namespace _Dev.Game.Scripts.Managers
             _unitAttack?.Invoke();
             
             units.ForEach(unit => { unit.Mover.MoveToAlongPath(path, unit); });
+            
+            units.Clear();
         }
     }
 }
